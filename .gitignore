@@ -1,0 +1,9 @@
+*.beam
+*.d
+*.huc
+*.P
+
+erl_crash.dump
+
+src/check.log
+
