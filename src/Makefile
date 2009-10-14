@@ -13,6 +13,8 @@ EUNITTESTS = \
 MY_UBF_EBIN = ./example-symlink-to-ubf-ebin
 MY_UBF_INCLUDE = ./example-symlink-to-ubf-include
 
+MY_ERLANG_RFC4627_EBIN = ./example-symlink-to-erlang-rfc4627-ebin
+
 # include erl make
 include ../priv/make/erl_make.mk
 
@@ -26,6 +28,6 @@ ERL_FLAGS += \
 # standard targets
 check: all
 	-rm -f ./*.log
-	$(RUNERL1) -noinput -noshell -pz $(EUNITTEST_DIR) \
+	$(RUNERL1) -noinput -noshell -pz $(EUNITTEST_DIR) -pz $(MY_UBF_EBIN) -pz $(MY_ERLANG_RFC4627_EBIN) \
 		-s erlang halt \
 		> ./check.log
