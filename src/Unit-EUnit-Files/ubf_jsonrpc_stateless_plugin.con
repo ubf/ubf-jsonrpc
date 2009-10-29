@@ -1,0 +1,68 @@
+%%% -*- mode: erlang -*-
+
++NAME("test").
+
++VSN("ubf1.0").
+
+
+%%%%%%
++TYPES
+
+authinfo()              = term();
+timeout()               = infinity | integer(); %% milliseconds
+now()                   = {integer(), integer(), integer()};
+
+now_req()               = {now, authinfo(), timeout()};
+now_res()               = {ok, now()};
+
+client_breaks_req01()   = {client_breaks_req01, authinfo(), timeout()};
+client_breaks_res01()   = client_breaks_res01;
+client_timeout_req03()  = {client_timeout_req03, authinfo(), timeout()};
+client_timeout_res03()  = client_timeout_res03;
+
+server_breaks_req01()   = {server_breaks_req01, authinfo(), timeout()};
+server_breaks_res01()   = server_breaks_res01;
+server_timeout_req03()  = {server_timeout_req03, authinfo(), timeout()};
+server_timeout_res03()  = server_timeout_res03;
+server_crash_req05()    = {server_crash_req05, authinfo(), timeout()};
+server_crash_res05()    = server_crash_res05;
+
+
+%%%%%
+%%% keepalive
+keepalive_req()         = keepalive;
+keepalive_res()         = ok;
+
+
+%%%%%
+%%% meta methods
+info_req()              = info;
+info_res()              = string();
+
+description_req()       = description;
+description_res()       = string();
+
+contract_req()          = contract;
+contract_res()          = term().
+
+
+%%%%%
+%%% anystate
++ANYSTATE
+
+now_req()              => now_res();
+
+client_breaks_req01()  => client_breaks_res01();
+client_timeout_req03() => client_timeout_res03();
+
+server_breaks_req01()  => server_breaks_res01();
+server_timeout_req03() => server_timeout_res03();
+server_crash_req05()   => server_crash_res05();
+
+%% keepalive
+keepalive_req()        => keepalive_res();
+
+%% meta methods
+info_req()             => info_res();
+description_req()      => description_res();
+contract_req()         => contract_res().

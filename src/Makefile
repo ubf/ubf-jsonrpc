@@ -4,11 +4,13 @@
 
 
 MODULES = \
-	ubf_jsonrpc
-
-PLUGINS = \
+	ubf_jsonrpc \
+	ubf_jsonrpc_inets_httpc_simple \
+	ubf_jsonrpc_inets_httpd_simple
 
 EUNITTESTS = \
+	ubf_jsonrpc_stateless_plugin \
+	ubf_jsonrpc_inets_simple_test
 
 MY_UBF_EBIN = ./example-symlink-to-ubf-ebin
 MY_UBF_INCLUDE = ./example-symlink-to-ubf-include
@@ -22,6 +24,10 @@ ERL_COMPILE_FLAGS += \
 	-I $(MY_UBF_INCLUDE) \
 	-pz $(MY_UBF_EBIN)
 
+TESTONLY_ERL_COMPILE_FLAGS += \
+	-I $(MY_UBF_INCLUDE) \
+	-pz $(MY_UBF_EBIN)
+
 ERL_FLAGS += \
 	-pz $(MY_UBF_EBIN)
 
@@ -29,5 +35,7 @@ ERL_FLAGS += \
 check: all
 	-rm -f ./*.log
 	$(RUNERL1) -noinput -noshell -pz $(EUNITTEST_DIR) -pz $(MY_UBF_EBIN) -pz $(MY_ERLANG_RFC4627_EBIN) \
+		-s inets start \
+		-s ubf_jsonrpc_inets_simple_test do_eunit \
 		-s erlang halt \
 		> ./check.log

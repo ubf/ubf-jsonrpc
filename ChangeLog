@@ -1,3 +1,7 @@
+2009-10-29 11:35 JST  norton
+
+        * src/Makefile, src/ubf_jsonrpc.erl, src/ubf_jsonrpc_inets_httpd_simple.erl, src/ubf_jsonrpc_inets_httpc_simple.erl, src/Unit-EUnit-Files/*: inets-based httpd module for JSON-RPC and UBF
+
 2009-10-14 24:00 JST  norton
 
         * ChangeLog: Add new ChangeLog

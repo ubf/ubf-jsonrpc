@@ -39,6 +39,10 @@ Documentation -- Where should I start?
 This README is a good first step.  Check out and build using the "To
 build" instructions above.
 
+Eunit tests can be found in the Unit-EUnit-Files directory.  These
+tests illustrate an inets-based httpd module that uses UBF's contract
+manager for checking JSON-RPC requests and responses.
+
 
 What is UBF?
 ============

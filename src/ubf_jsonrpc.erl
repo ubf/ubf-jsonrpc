@@ -103,6 +103,8 @@ rpc_v11_req_encode(Method, Id, _UBFMod) when is_atom(Method) ->
     {undefined, {obj, [{"version", <<"1.1">>}, {"id", Id}, {"method", jsf:atom_to_binary(Method)}, {"params", []}]}};
 
 rpc_v11_req_encode(X, Id, UBFMod) when is_tuple(X), size(X) > 1, is_atom(element(1, X)) ->
+    %% NOTE: assumes the second element of X is AuthInfo and remove it
+    %% from the request sent to the server
     [Method|[AuthInfo|Params]] = tuple_to_list(X),
     EncodedParams = jsf:do_encode(Params,UBFMod),
     {AuthInfo, {obj, [{"version", <<"1.1">>}, {"id", Id}, {"method", jsf:atom_to_binary(Method)}, {"params", EncodedParams}]}}.
