@@ -1,0 +1,4 @@
+{application,ubf}.
+{packages,[]}.
+{modules,[ubf_jsonrpc,ubf_jsonrpc_inets_httpc_simple,
+          ubf_jsonrpc_inets_httpd_simple,ubf_jsonrpc_inets_httpd_simple_auth]}.

@@ -3,10 +3,10 @@
 -include("ubf.hrl").
 
 -export([rpc_v11_req_encode_print/3]).
--export([rpc_v11_req_encode/3]).
+-export([rpc_v11_req_encode/3, rpc_v11_req_encode/4]).
 
 -export([rpc_v11_req_decode_print/3]).
--export([rpc_v11_req_decode/3]).
+-export([rpc_v11_req_decode/3, rpc_v11_req_decode/4]).
 
 -export([rpc_v11_res_encode_print/4]).
 -export([rpc_v11_res_encode/4]).
@@ -99,13 +99,36 @@
 rpc_v11_req_encode_print(X, Id, UBFMod) ->
     io:format("~s~n", [rpc_v11_req_encode(X, Id, UBFMod)]).
 
-rpc_v11_req_encode(Method, Id, _UBFMod) when is_atom(Method) ->
+rpc_v11_req_encode(Request, Id, UBFMod) ->
+    rpc_v11_req_encode(Request, Id, UBFMod, true).
+
+%% @spec (atom() | tuple(), binary(), atom(), boolean()) ->
+%%       {undefined | term(), encoded_json_term()}
+%% @doc Take an Erlang RPC term (atom or tuple, where 1st element of the
+%% tuple is the RPC function to call) and extract the AuthInfo (if
+%% SubstAuthInfoP is true) and encode the call atom/tuple as an intermediate
+%% representation of a JSON object.
+%%
+%% The intermediate _JSON object needs to be string-ified before it's really a
+%% JSON thing, because JSON things are strings.
+%%
+%% See EUnit test module ubf_jsonrpc_examples_test.erl for example usage.
+
+rpc_v11_req_encode(Method, Id, _UBFMod, _SubstAuthInfoP) when is_atom(Method) ->
     {undefined, {obj, [{"version", <<"1.1">>}, {"id", Id}, {"method", jsf:atom_to_binary(Method)}, {"params", []}]}};
 
-rpc_v11_req_encode(X, Id, UBFMod) when is_tuple(X), size(X) > 1, is_atom(element(1, X)) ->
-    %% NOTE: assumes the second element of X is AuthInfo and remove it
-    %% from the request sent to the server
-    [Method|[AuthInfo|Params]] = tuple_to_list(X),
+rpc_v11_req_encode(X, Id, UBFMod, SubstAuthInfoP)
+  when is_tuple(X), size(X) > 1, is_atom(element(1, X)),
+       is_boolean(SubstAuthInfoP) ->
+    [Method, Param0|Params_rest] = tuple_to_list(X),
+    {Method, AuthInfo, Params} =
+	if SubstAuthInfoP == true ->
+		%% NOTE: assumes the second element of X is AuthInfo and remove
+		%% it from the request sent to the server
+		{Method, Param0, Params_rest};
+	   SubstAuthInfoP == false ->
+		{Method, undefined, [Param0|Params_rest]}
+	end,
     EncodedParams = jsf:do_encode(Params,UBFMod),
     {AuthInfo, {obj, [{"version", <<"1.1">>}, {"id", Id}, {"method", jsf:atom_to_binary(Method)}, {"params", EncodedParams}]}}.
 
@@ -118,6 +141,9 @@ rpc_v11_req_decode_print(AuthInfo, X, UBFMod) ->
     io:format("~s~n", [rpc_v11_req_decode(AuthInfo, X, UBFMod)]).
 
 rpc_v11_req_decode(AuthInfo, X, UBFMod) ->
+    rpc_v11_req_decode(AuthInfo, X, UBFMod, true).
+
+rpc_v11_req_decode(AuthInfo, X, UBFMod, SubstAuthInfoP) ->
     try
         case rfc4627:decode(X) of
             {ok, {obj, Props}, []} ->
@@ -132,7 +158,8 @@ rpc_v11_req_decode(AuthInfo, X, UBFMod) ->
                     [] ->
                         {ok, Method, Id};
                     Params ->
-                        if AuthInfo =:= undefined ->
+                        if AuthInfo =:= undefined;
+			   SubstAuthInfoP == false ->
                                 {ok, list_to_tuple([Method|Params]), Id};
                            true ->
                                 {ok, list_to_tuple([Method|[AuthInfo|Params]]), Id}
