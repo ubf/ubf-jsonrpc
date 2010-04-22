@@ -1,5 +1,5 @@
 2010-04-22 12:45 JST  norton
-        * src/jsf.erl, src/jsf_dirver.erl, src/jsf_utils: Refactor and
+        * src/jsf.erl, src/jsf_driver.erl, src/jsf_utils: Refactor and
 	move non ubf/ebf drivers to their own repository.
 
 2009-12-26 14:50 JST  norton
