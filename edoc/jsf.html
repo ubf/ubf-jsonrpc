@@ -123,12 +123,17 @@ have no need to use these functions.</p>
 <table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#atom_to_binary-1">atom_to_binary/1</a></td><td></td></tr>
 <tr><td valign="top"><a href="#binary_to_existing_atom-1">binary_to_existing_atom/1</a></td><td></td></tr>
 <tr><td valign="top"><a href="#contract_records-0">contract_records/0</a></td><td></td></tr>
+<tr><td valign="top"><a href="#decode-1">decode/1</a></td><td></td></tr>
 <tr><td valign="top"><a href="#decode-2">decode/2</a></td><td></td></tr>
 <tr><td valign="top"><a href="#decode-3">decode/3</a></td><td></td></tr>
 <tr><td valign="top"><a href="#decode_init-0">decode_init/0</a></td><td></td></tr>
 <tr><td valign="top"><a href="#do_decode-2">do_decode/2</a></td><td></td></tr>
 <tr><td valign="top"><a href="#do_encode-2">do_encode/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#encode-1">encode/1</a></td><td></td></tr>
 <tr><td valign="top"><a href="#encode-2">encode/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#proto_driver-0">proto_driver/0</a></td><td></td></tr>
+<tr><td valign="top"><a href="#proto_packet_type-0">proto_packet_type/0</a></td><td></td></tr>
+<tr><td valign="top"><a href="#proto_vsn-0">proto_vsn/0</a></td><td></td></tr>
 </table>
 
 <h2><a name="functions">Function Details</a></h2>
@@ -146,6 +151,11 @@ have no need to use these functions.</p>
 <h3 class="function"><a name="contract_records-0">contract_records/0</a></h3>
 <div class="spec">
 <p><tt>contract_records() -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="decode-1">decode/1</a></h3>
+<div class="spec">
+<p><tt>decode(X) -&gt; any()</tt></p>
 </div>
 
 <h3 class="function"><a name="decode-2">decode/2</a></h3>
@@ -173,9 +183,29 @@ have no need to use these functions.</p>
 <p><tt>do_encode(X, Mod) -&gt; any()</tt></p>
 </div>
 
+<h3 class="function"><a name="encode-1">encode/1</a></h3>
+<div class="spec">
+<p><tt>encode(X) -&gt; any()</tt></p>
+</div>
+
 <h3 class="function"><a name="encode-2">encode/2</a></h3>
 <div class="spec">
 <p><tt>encode(X, Mod) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="proto_driver-0">proto_driver/0</a></h3>
+<div class="spec">
+<p><tt>proto_driver() -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="proto_packet_type-0">proto_packet_type/0</a></h3>
+<div class="spec">
+<p><tt>proto_packet_type() -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="proto_vsn-0">proto_vsn/0</a></h3>
+<div class="spec">
+<p><tt>proto_vsn() -&gt; any()</tt></p>
 </div>
 <hr>
 
