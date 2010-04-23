@@ -115,11 +115,13 @@
 %% '''
 
 -module(jsf).
+-behavior(contract_proto).
 
 -include("ubf.hrl").
 
--export([encode/2, do_encode/2]).
--export([decode_init/0, decode/2, decode/3, do_decode/2]).
+-export([proto_vsn/0, proto_driver/0, proto_packet_type/0]).
+-export([encode/1, encode/2, do_encode/2]).
+-export([decode_init/0, decode/1, decode/2, decode/3, do_decode/2]).
 
 -export([atom_to_binary/1]).
 -export([binary_to_existing_atom/1]).
@@ -135,6 +137,17 @@ contract_records() ->
 %%
 %%---------------------------------------------------------------------
 %%
+proto_vsn()         -> 'jsf1.0'.
+proto_driver()      -> jsf_driver.
+proto_packet_type() -> 0.
+
+
+%%
+%%---------------------------------------------------------------------
+%%
+encode(X) ->
+    encode(X, ?MODULE).
+
 encode(X, Mod) ->
     rfc4627:encode(do_encode(X, Mod)).
 
@@ -208,6 +221,9 @@ encode_record(N, X, Keys, Acc, Mod) ->
 %%---------------------------------------------------------------------
 %%
 decode_init() -> {more, []}.
+
+decode(X) ->
+    decode(X, ?MODULE).
 
 decode(X, Mod) ->
     decode(X, Mod, decode_init()).

@@ -1,4 +1,8 @@
-2010-04-22 12:45 JST  norton
+22010-04-23 12:30 JST  norton
+        * jsf.erl, jsf_driver.erl: Refactor to easily support new protocol
+	drivers.
+
+010-04-22 12:45 JST  norton
         * src/jsf.erl, src/jsf_driver.erl, src/jsf_utils: Refactor and
 	move non ubf/ebf drivers to their own repository.
 
