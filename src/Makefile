@@ -24,7 +24,7 @@ EUNITTESTS = \
 MY_UBF_EBIN = ./example-symlink-to-ubf-ebin
 MY_UBF_INCLUDE = ./example-symlink-to-ubf-include
 
-MY_ERLANG_RFC4627_EBIN = ./example-symlink-to-erlang-rfc4627-ebin
+MY_MOCHIWEB_EBIN = ./example-symlink-to-mochiweb-ebin
 
 # include erl make
 include ../priv/make/erl_make.mk
@@ -43,7 +43,7 @@ ERL_FLAGS += \
 # standard targets
 check: all
 	-rm -f ./*.log
-	$(RUNERL1) -noinput -noshell -pz $(TEST_DIR) -pz $(EUNITTEST_DIR) -pz $(MY_UBF_EBIN) -pz $(MY_ERLANG_RFC4627_EBIN) \
+	$(RUNERL1) -noinput -noshell -pz $(TEST_DIR) -pz $(EUNITTEST_DIR) -pz $(MY_UBF_EBIN) -pz $(MY_MOCHIWEB_EBIN) \
 		-s jsf_test tests \
 		-s inets start \
 		-s ubf_jsonrpc_examples_test do_eunit \

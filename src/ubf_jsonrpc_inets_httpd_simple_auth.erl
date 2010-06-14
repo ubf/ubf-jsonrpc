@@ -28,7 +28,8 @@ do_rpc(#mod{init_data=InitData
                 true ->
                     AuthInfo = InitData,
                     {JsonResult, JsonError, _JsonStatus, JsonId} = do_jsonrpc(AuthInfo, RequestBody, CONTRACT),
-                    ResponseBody = ubf_jsonrpc:rpc_v11_res_encode(JsonResult, JsonError, JsonId, CONTRACT),
+                    ResponseBody =
+			binary_to_list(iolist_to_binary(ubf_jsonrpc:rpc_v11_res_encode(JsonResult, JsonError, JsonId, CONTRACT))),
                     ResponseHead = [{code,200}
                                     , {content_type, "application/json; charset=utf-8"}
                                     , {content_length, integer_to_list(length(ResponseBody))}],

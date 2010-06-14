@@ -20,13 +20,12 @@ encode(Contract, Term) ->
     [jsf:encode(Term, Contract), "\n"].
 
 decode(Contract, Cont, Binary, CallBack) ->
-    List = binary_to_list(Binary),
-    Cont1 = jsf:decode(List, Contract, Cont),
+    Cont1 = jsf:decode(Binary, Contract, Cont),
     decode(Contract, Cont1, CallBack).
 
 decode(_Contract, {more, _}=Cont, _CallBack) ->
     Cont;
-decode(Contract, {ok, Term, List}=_Cont, CallBack) ->
+decode(Contract, {ok, Term, Rem}=_Cont, CallBack) ->
     CallBack(Term),
-    Cont1 = jsf:decode(List, Contract),
+    Cont1 = jsf:decode(Rem, Contract),
     decode(Contract, Cont1, CallBack).

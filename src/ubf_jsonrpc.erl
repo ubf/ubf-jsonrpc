@@ -115,22 +115,22 @@ rpc_v11_req_encode(Request, Id, UBFMod) ->
 %% See EUnit test module ubf_jsonrpc_examples_test.erl for example usage.
 
 rpc_v11_req_encode(Method, Id, _UBFMod, _SubstAuthInfoP) when is_atom(Method) ->
-    {undefined, {obj, [{"version", <<"1.1">>}, {"id", Id}, {"method", jsf:atom_to_binary(Method)}, {"params", []}]}};
+    {undefined, {struct, [{<<"version">>, <<"1.1">>}, {<<"id">>, Id}, {<<"method">>, jsf:atom_to_binary(Method)}, {<<"params">>, []}]}};
 
 rpc_v11_req_encode(X, Id, UBFMod, SubstAuthInfoP)
   when is_tuple(X), size(X) > 1, is_atom(element(1, X)),
        is_boolean(SubstAuthInfoP) ->
     [Method, Param0|Params_rest] = tuple_to_list(X),
     {Method, AuthInfo, Params} =
-	if SubstAuthInfoP == true ->
-		%% NOTE: assumes the second element of X is AuthInfo and remove
-		%% it from the request sent to the server
-		{Method, Param0, Params_rest};
-	   SubstAuthInfoP == false ->
-		{Method, undefined, [Param0|Params_rest]}
-	end,
+        if SubstAuthInfoP == true ->
+                %% NOTE: assumes the second element of X is AuthInfo and remove
+                %% it from the request sent to the server
+                {Method, Param0, Params_rest};
+           SubstAuthInfoP == false ->
+                {Method, undefined, [Param0|Params_rest]}
+        end,
     EncodedParams = jsf:do_encode(Params,UBFMod),
-    {AuthInfo, {obj, [{"version", <<"1.1">>}, {"id", Id}, {"method", jsf:atom_to_binary(Method)}, {"params", EncodedParams}]}}.
+    {AuthInfo, {struct, [{<<"version">>, <<"1.1">>}, {<<"id">>, Id}, {<<"method">>, jsf:atom_to_binary(Method)}, {<<"params">>, EncodedParams}]}}.
 
 
 %%
@@ -145,29 +145,35 @@ rpc_v11_req_decode(AuthInfo, X, UBFMod) ->
 
 rpc_v11_req_decode(AuthInfo, X, UBFMod, SubstAuthInfoP) ->
     try
-        case rfc4627:decode(X) of
-            {ok, {obj, Props}, []} ->
-                {value, {"version", <<"1.1">>}, Props1} = lists:keytake("version", 1, Props),
-                {value, {"id", Id}, Props2} = lists:keytake("id", 1, Props1),
-                {value, {"method", MethodBin}, Props3} = lists:keytake("method", 1, Props2),
-                {value, {"params", JsonParams}, []} = lists:keytake("params", 1, Props3),
-                Method = jsf:binary_to_existing_atom(MethodBin),
-                case catch (jsf:do_decode(JsonParams, UBFMod)) of
-                    {'EXIT', Reason} ->
-                        {error, Reason, Id};
-                    [] ->
-                        {ok, Method, Id};
-                    Params ->
-                        if AuthInfo =:= undefined;
-			   SubstAuthInfoP == false ->
-                                {ok, list_to_tuple([Method|Params]), Id};
-                           true ->
-                                {ok, list_to_tuple([Method|[AuthInfo|Params]]), Id}
-                        end
-                end;
-            Other ->
-                {error, Other}
-        end
+        %% case gmt_mime:classify_charset(gmt_util:bin_ify(X)) of
+        %%     '8bit' ->
+        %%      %% same crash as rfc4627.erl and xmerl_ucs.erl
+        %%      exit({ucs,{bad_utf8_character_code}});
+        %%     _ ->
+                case mochijson2:decode(X) of
+                    {struct, Props} ->
+                        {value, {<<"version">>, <<"1.1">>}, Props1} = lists:keytake(<<"version">>, 1, Props),
+                        {value, {<<"id">>, Id}, Props2} = lists:keytake(<<"id">>, 1, Props1),
+                        {value, {<<"method">>, MethodBin}, Props3} = lists:keytake(<<"method">>, 1, Props2),
+                        {value, {<<"params">>, JsonParams}, []} = lists:keytake(<<"params">>, 1, Props3),
+                        Method = jsf:binary_to_existing_atom(MethodBin),
+                        case catch (jsf:do_decode(JsonParams, UBFMod)) of
+                            {'EXIT', Reason} ->
+                                {error, Reason, Id};
+                            [] ->
+                                {ok, Method, Id};
+                            Params ->
+                                if AuthInfo =:= undefined;
+                                   SubstAuthInfoP == false ->
+                                        {ok, list_to_tuple([Method|Params]), Id};
+                                   true ->
+                                        {ok, list_to_tuple([Method|[AuthInfo|Params]]), Id}
+                                end
+                        end;
+                    Other ->
+                        {error, Other}
+                end
+        %% end
     catch
         {'EXIT', Reason1} ->
             {error, Reason1};
@@ -186,8 +192,9 @@ rpc_v11_res_encode_print(X, Y, Id, UBFMod) ->
 rpc_v11_res_encode(X, Y, Id, UBFMod)  ->
     Result = jsf:do_encode(X,UBFMod),
     Error = jsf:do_encode(Y,UBFMod),
-    Z = {obj, [{<<"version">>, <<"1.1">>}, {<<"id">>, Id}, {<<"result">>, Result}, {<<"error">>, Error}]},
-    rfc4627:encode(Z).
+    Z = {struct, [{<<"version">>, <<"1.1">>}, {<<"id">>, Id}, {<<"result">>, Result}, {<<"error">>, Error}]},
+    Encoder = mochijson2:encoder([{utf8, true}]),
+    iolist_to_binary(Encoder(Z)).
 
 
 %%
@@ -198,13 +205,19 @@ rpc_v11_res_decode_print(X, UBFMod) ->
     io:format("~s~n", [rpc_v11_res_decode(X, UBFMod)]).
 
 rpc_v11_res_decode(X, UBFMod) ->
-    case rfc4627:decode(X) of
-        {ok, {obj, Props}, []} ->
-            {value, {"version", <<"1.1">>}, Props1} = lists:keytake("version", 1, Props),
-            {value, {"id", Id}, Props2} = lists:keytake("id", 1, Props1),
-            {value, {"result", Result}, Props3} = lists:keytake("result", 1, Props2),
-            {value, {"error", Error}, []} = lists:keytake("error", 1, Props3),
-            {ok, jsf:do_decode(Result,UBFMod), jsf:do_decode(Error,UBFMod), Id};
-        Other ->
-            {error, Other}
-    end.
+    %% case gmt_mime:classify_charset(gmt_util:bin_ify(X)) of
+    %%     '8bit' ->
+    %%         %% same crash as rfc4627.erl and xmerl_ucs.erl
+    %%         exit({ucs,{bad_utf8_character_code}});
+    %%     _ ->
+            case mochijson2:decode(X) of
+                {struct, Props} ->
+                    {value, {<<"version">>, <<"1.1">>}, Props1} = lists:keytake(<<"version">>, 1, Props),
+                    {value, {<<"id">>, Id}, Props2} = lists:keytake(<<"id">>, 1, Props1),
+                    {value, {<<"result">>, Result}, Props3} = lists:keytake(<<"result">>, 1, Props2),
+                    {value, {<<"error">>, Error}, []} = lists:keytake(<<"error">>, 1, Props3),
+                    {ok, jsf:do_decode(Result,UBFMod), jsf:do_decode(Error,UBFMod), Id};
+                Other ->
+                    {error, Other}
+            end.
+    %% end.

@@ -54,7 +54,7 @@ have no need to use these functions.</p>
            null (atom)</pre>
  
   <h3><a name="Mapping:_JSON_->_Erlang_Terms,_using_erlang-rfc46267">Mapping: JSON -&gt; Erlang Terms, using erlang-rfc46267</a></h3>
-  <pre>  json::object() = {obj, [json::pair()]}
+  <pre>  json::object() = {struct, [json::pair()]}
  
   json::pair() = {string(), json::value()}
        string() = [byte()]
@@ -94,15 +94,15 @@ have no need to use these functions.</p>
   ubf::record() = record()</pre>
  
   <h3><a name="Mapping:_UBF_value_->_JSON_value">Mapping: UBF value -&gt; JSON value</a></h3>
-  <pre>  ubf::tuple() = {obj, [{"$T", ubf::list()}]}
+  <pre>  ubf::tuple() = {struct, [{&lt;&lt;"$T"&gt;&gt;, ubf::list()}]}
  
   ubf::list() = [value()]
  
   ubf::number() = integer() | float()
  
-  ubf::string() = {obj, [{"$S", binary()}]}
+  ubf::string() = {struct, [{&lt;&lt;"$S"&gt;&gt;, binary()}]}
  
-  ubf::proplist() = {obj, [{binary(), value()}]}
+  ubf::proplist() = {struct, [{binary(), value()}]}
  
   ubf::binary() = binary()
  
@@ -110,10 +110,10 @@ have no need to use these functions.</p>
   ubf::false() = false
   ubf::undefined() = null
  
-  ubf::atom() = {obj, [{"$A", atomname()}]}
+  ubf::atom() = {struct, [{&lt;&lt;"$A"&gt;&gt;, atomname()}]}
        atomname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the actual atom
  
-  ubf::record() = {obj, [{"$R", recordname()}] ++ [recordpair()]}
+  ubf::record() = {struct, [{&lt;&lt;"$R"&gt;&gt;, recordname()}] ++ [recordpair()]}
        recordname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record's name
        recordpair() = {recordkey(), value()}
        recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key's name

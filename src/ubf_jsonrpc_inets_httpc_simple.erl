@@ -40,8 +40,9 @@ do(Url, Contract, Request, Id, HTTPOptions, Options) ->
 do(Url, Contract, Request, Id, HTTPOptions, Options, SubstAuthInfoP) ->
     {_AuthInfo, EncodedReq} =
 	ubf_jsonrpc:rpc_v11_req_encode(Request, Id, Contract, SubstAuthInfoP),
-    RequestBody = rfc4627:encode(EncodedReq),
-    case do_post(Url, RequestBody, HTTPOptions, Options) of
+    Encoder = mochijson2:encoder([{utf8, true}]),
+    RequestBody = iolist_to_binary(Encoder(EncodedReq)),
+    case do_post(Url, RequestBody, HTTPOptions, [{body_format, binary}|Options]) of
         {ok, 200, ResponseBody} ->
             ubf_jsonrpc:rpc_v11_res_decode(ResponseBody, Contract);
         {ok, Code, _} ->
@@ -58,7 +59,7 @@ do(Url, Contract, Request, Id, HTTPOptions, Options, SubstAuthInfoP) ->
 do_post(Url, RequestBody, HTTPOptions, Options) ->
     RequestHead = [{"connection", "close"}
                    , {"content-type", "application/json; charset=utf-8"}
-                   , {"content-length", integer_to_list(length(RequestBody))}],
+                   , {"content-length", integer_to_list(size(RequestBody))}],
     Request = {Url, RequestHead, [], RequestBody},
     Response = http:request(post, Request, HTTPOptions, Options),
     case Response of

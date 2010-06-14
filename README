@@ -1,7 +1,7 @@
 
 This is ubf-jsonrpc, a framework for integrating UBF, JSF and
-JSON-RPC.  This repository depends on the ubf and erlang-rfc4627 open
-source repositories.
+JSON-RPC.  This repository depends on the ubf and MochiWeb open source
+repositories.
 
 
 To build
@@ -13,10 +13,10 @@ To build
 2. Get and install ubf
    http://github.com/norton/ubf
 
-3. Get and install erlang-rfc4627
-   http://www.lshift.net/blog/2007/02/17/json-and-json-rpc-for-erlang
+3. Get and install MochiWeb
+   http://code.google.com/p/mochiweb
    *OR*
-   http://github.com/norton/erlang-rfc4627
+   http://github.com/norton/mochiweb
 
 4. Change to the src directory and type make
    $ cd src
@@ -29,16 +29,15 @@ To build
 **NOTE**
 
 Before make, one quick/kludge method to "install" is to obtain and
-compile the erlang-rfc4627 code from LShift.  (Optionally, copy its
-.beam files to a more permanent installation location.)
+compile the MochiWeb code.  (Optionally, copy its .beam files to a
+more permanent installation location.)
 
 Before make, edit "src/Makefile" to change the "MY_UBF_EBIN" variable
 to point to where the ebin directory that contains ubf's .beam files
 and the "MY_UBF_INCLUDE" variable to point to where the include
 directory that contains ubf's .hrl files. Then edit "src/Makefile" to
-change the "MY_ERLANG_RFC4627_EBIN" variable to point to where the
-ebin directory that contains erlang-rfc4627's .beam files.  Then run
-"make".
+change the "MY_MOCHIWEB_EBIN" variable to point to where the ebin
+directory that contains MochiWeb's .beam files.  Then run "make".
    
    
 Documentation -- Where should I start?
@@ -76,9 +75,9 @@ client<->server communication.  Instead, JSON (RFC 4627) is used.
 "JSF" is short for "JavaScript Format".
 
 There is no agreed-upon convention for converting Erlang terms to JSON
-objects.  This library uses the convention set forth by LShift's JSON
-library (see URL above).  In addition, there are a couple of other
-conventions layered on top of LShift's implementation.
+objects.  This library uses the convention set forth by MochiWeb's
+JSON library (see URL above).  In addition, there are a couple of
+other conventions layered on top of MochiWeb's implementation.
 
    The UBF(B) contract checker has been modified to make a distinction
    between an Erlang record and an arbitrary Erlang tuple.  An
@@ -113,6 +112,13 @@ with the "$R", "$T", and "$A" notation (for records, tuples, and
 atoms) into whatever object is most convenient.
 
 
+NOTE: Gemini Mobile Technologies, Inc. has implemented a module for
+classifying the input character set to detect non-UTF8 JSON inputs.
+This module has not yet been released to the open-source world.
+Hence, this application assumes all JSON inputs are valid UTF8.
+
+
+
 What is JSON-RPC?
 =================
 
@@ -126,9 +132,9 @@ Credits
 Many, many thanks to Joe Armstrong, UBF's designer and original
 implementor.
 
-Thanks to LShift, erlang-rfc4627's designer and implementor.
-UBF-JSONRPC relies on the erlang-rfc4627 application for encoding and
-decoding JSON in erlang.
+Thanks to MochiWeb.  UBF-JSONRPC relies on the MochiWeb
+(i.e. mochijson2.erl) application for encoding and decoding JSON in
+erlang.
 
 Gemini Mobile Technologies, Inc. has approved the release of this
 repository under an MIT license.

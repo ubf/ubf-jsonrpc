@@ -43,7 +43,7 @@
 %%
 %% == Mapping: JSON -> Erlang Terms, using erlang-rfc46267 ==
 %% ```
-%% json::object() = {obj, [json::pair()]}
+%% json::object() = {struct, [json::pair()]}
 %%
 %% json::pair() = {string(), json::value()}
 %%      string() = [byte()]
@@ -87,15 +87,15 @@
 %%
 %% == Mapping: UBF value -> JSON value ==
 %% ```
-%% ubf::tuple() = {obj, [{"$T", ubf::list()}]}
+%% ubf::tuple() = {struct, [{<<"$T">>, ubf::list()}]}
 %%
 %% ubf::list() = [value()]
 %%
 %% ubf::number() = integer() | float()
 %%
-%% ubf::string() = {obj, [{"$S", binary()}]}
+%% ubf::string() = {struct, [{<<"$S">>, binary()}]}
 %%
-%% ubf::proplist() = {obj, [{binary(), value()}]}
+%% ubf::proplist() = {struct, [{binary(), value()}]}
 %%
 %% ubf::binary() = binary()
 %%
@@ -103,10 +103,10 @@
 %% ubf::false() = false
 %% ubf::undefined() = null
 %%
-%% ubf::atom() = {obj, [{"$A", atomname()}]}
+%% ubf::atom() = {struct, [{<<"$A">>, atomname()}]}
 %%      atomname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the actual atom
 %%
-%% ubf::record() = {obj, [{"$R", recordname()}] ++ [recordpair()]}
+%% ubf::record() = {struct, [{<<"$R">>, recordname()}] ++ [recordpair()]}
 %%      recordname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record's name
 %%      recordpair() = {recordkey(), value()}
 %%      recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key's name
@@ -149,7 +149,8 @@ encode(X) ->
     encode(X, ?MODULE).
 
 encode(X, Mod) ->
-    rfc4627:encode(do_encode(X, Mod)).
+    Encoder = mochijson2:encoder([{utf8, true}]),
+    iolist_to_binary(Encoder(do_encode(X, Mod))).
 
 do_encode(X, _Mod) when is_binary(X); is_integer(X); is_float(X) ->
     X;
@@ -171,7 +172,7 @@ encode_atom(false) ->
 encode_atom(undefined) ->
     null;
 encode_atom(X) ->
-    {obj, [{"$A", atom_to_binary(X)}]}.
+    {struct, [{<<"$A">>, atom_to_binary(X)}]}.
 
 encode_list(X, Mod) ->
     encode_list(X, [], Mod).
@@ -183,25 +184,25 @@ encode_list([H|T], Acc, Mod) ->
     encode_list(T, NewAcc, Mod).
 
 encode_string(X) when is_list(X) ->
-    {obj, [{"$S", list_to_binary(X)}]}.
+    {struct, [{<<"$S">>, list_to_binary(X)}]}.
 
 encode_proplist(X, Mod) when is_list(X) ->
-    {obj, [ {K, do_encode(V, Mod)} || {K, V} <- X ]}.
+    {struct, [ {K, do_encode(V, Mod)} || {K, V} <- X ]}.
 
 encode_tuple({}, _Mod) ->
-    {obj, [{"$T", []}]};
+    {struct, [{<<"$T">>, []}]};
 encode_tuple(X, Mod) when not is_atom(element(1, X)) ->
-    {obj, [{"$T", encode_tuple(1, X, [], Mod)}]};
+    {struct, [{<<"$T">>, encode_tuple(1, X, [], Mod)}]};
 encode_tuple(X, Mod) ->
     RecName = element(1, X),
     Y = {RecName, tuple_size(X)-1},
     case lists:member(Y, Mod:contract_records()) of
         false ->
-            {obj, [{"$T", encode_tuple(1, X, [], Mod)}]};
+            {struct, [{<<"$T">>, encode_tuple(1, X, [], Mod)}]};
         true ->
             %% @TODO optimize this code
             Keys = list_to_tuple(Mod:contract_record(Y)),
-            {obj, [{"$R", atom_to_binary(RecName)}|encode_record(2, X, Keys, [], Mod)]}
+            {struct, [{<<"$R">>, atom_to_binary(RecName)}|encode_record(2, X, Keys, [], Mod)]}
     end.
 
 encode_tuple(N, X, Acc, _Mod) when is_integer(N), N > tuple_size(X) ->
@@ -220,7 +221,7 @@ encode_record(N, X, Keys, Acc, Mod) ->
 %%
 %%---------------------------------------------------------------------
 %%
-decode_init() -> {more, []}.
+decode_init() -> {more, <<>>}.
 
 decode(X) ->
     decode(X, ?MODULE).
@@ -230,15 +231,26 @@ decode(X, Mod) ->
 
 decode(X, Mod, {more, Old}) ->
     decode(X, Mod, Old);
-decode(X, Mod, Old) ->
-    New = Old ++ X,
-    case rfc4627:decode(New) of
-        {ok, JSON, Remainder} ->
-            {ok, do_decode(JSON, Mod), Remainder};
-        {error, unexpected_end_of_input} ->
-            {more, New};
-        {error, _}=Err ->
-            Err
+decode(X, Mod, Old) when is_list(X) ->
+    decode(list_to_binary(X), Mod, Old);
+decode(X, Mod, Old) when is_binary(X) ->
+    New = <<Old/bitstring, X/bitstring>>,
+    if
+        New==<<>> ->
+            {more, <<>>};
+        true ->
+            %% case gmt_mime:classify_charset(New) of
+            %%  '8bit' ->
+            %%      %% same crash as rfc4627.erl and xmerl_ucs.erl
+            %%      exit({ucs,{bad_utf8_character_code}});
+            %%  _ ->
+                    case catch mochijson2:decode(New) of
+                        {'EXIT',_} ->
+                            {error,syntax_error};
+                        JSON ->
+                            {ok, do_decode(JSON, Mod), <<>>}
+                    end
+            %% end
     end.
 
 do_decode(X, _Mod) when is_binary(X); is_integer(X); is_float(X) ->
@@ -247,15 +259,15 @@ do_decode(X, _Mod) when is_atom(X) ->
     decode_atom(X);
 do_decode(X, Mod) when is_list(X) ->
     decode_list(X, Mod);
-do_decode({obj, [{"$A", X}]}, _Mod) ->
+do_decode({struct, [{<<"$A">>, X}]}, _Mod) ->
     decode_atom(X);
-do_decode({obj, [{"$S", X}]}, _Mod) ->
+do_decode({struct, [{<<"$S">>, X}]}, _Mod) ->
     decode_string(X);
-do_decode({obj, [{"$T", X}]}, Mod) ->
+do_decode({struct, [{<<"$T">>, X}]}, Mod) ->
     decode_tuple(X, Mod);
-do_decode({obj, X}, Mod) ->
-    case lists:keytake("$R", 1, X) of
-        {value, {"$R", RecName}, Y} ->
+do_decode({struct, X}, Mod) ->
+    case lists:keytake(<<"$R">>, 1, X) of
+        {value, {<<"$R">>, RecName}, Y} ->
             decode_record(RecName, Y, Mod);
         false ->
             decode_proplist(X, Mod)
@@ -283,7 +295,7 @@ decode_string(X) when is_binary(X) ->
     ?S(binary_to_list(X)).
 
 decode_proplist(X, Mod) when is_list(X) ->
-    ?P([ {list_to_binary(K), do_decode(V, Mod)} || {K, V} <- X ]).
+    ?P([ {K, do_decode(V, Mod)} || {K, V} <- X ]).
 
 decode_tuple(L, Mod) ->
     decode_tuple(L, [], Mod).
@@ -303,7 +315,7 @@ decode_record(RecNameStr, X, Mod) ->
 decode_record(RecName, [], [], Acc, _Mod) ->
     list_to_tuple([RecName|lists:reverse(Acc)]);
 decode_record(RecName, [H|T], X, Acc, Mod) ->
-    K = atom_to_list(H),
+    K = atom_to_binary(H),
     case lists:keytake(K, 1, X) of
         {value, {K, V}, NewX} ->
             NewAcc = [do_decode(V, Mod)|Acc],

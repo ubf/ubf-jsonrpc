@@ -15,16 +15,13 @@
 
 
 tests() ->
-    case code:which(rfc4627) of
-        non_existing ->
-            noop;
-        _ ->
-            true = test_json_decode_1(),
-            true = test_json_encode_1(),
-            true = test_jsf_decode_1(),
-            true = test_jsf_encode_1()
-    end,
+    true = test_json_decode_1(),
+    true = test_json_decode_2(),
+    true = test_json_encode_1(),
+    true = test_jsf_decode_1(),
+    true = test_jsf_encode_1(),
     true.
+
 
 %% jsf encode: ubf -> json
 %%     decode: ubj <- json
@@ -33,7 +30,7 @@ test_json_decode_1() ->
     Tst = test_json_decode_1,
     lists:foldl(
         fun({Desc, In, Exp, _}, Acc) ->
-            {ok, Out, []} = rfc4627:decode(In),
+            Out = mochijson2:decode(In),
             ?PRINTRESULT,
             Out = Exp,
             Acc + 1
@@ -43,12 +40,15 @@ test_json_decode_1() ->
     ),
     true.
 
+test_json_decode_2() ->
+    {error,syntax_error} = jsf:decode(<<"#5&4&3&2&1&$">>),
+    true.
 
 test_json_encode_1() ->
     Tst = test_json_encode_1,
     lists:foldl(
         fun({Desc, Exp, In, _}, Acc) ->
-            Out = rfc4627:encode(In),
+            Out = iolist_to_binary(mochijson2:encode(In)),
             ?PRINTRESULT,
             Out = Exp,
             Acc + 1
@@ -62,7 +62,7 @@ test_jsf_decode_1() ->
     Tst = test_jsf_decode_1,
     lists:foldl(
         fun({Desc, In, _, Exp}, Acc) ->
-            {ok, Out, []} = jsf:decode(In, test_plugin),
+            {ok, Out, <<>>} = jsf:decode(In, test_plugin),
             ?PRINTRESULT,
             Out = Exp,
             Acc + 1
@@ -94,58 +94,58 @@ data1() ->
         %% UBF - term()
         {
             "JSON true"
-            , "true"
+            , <<"true">>
             , true
             , true
         }, {
             "JSON false"
-            , "false"
+            , <<"false">>
             , false
             , false
         }, {
             "JSON null - UBF undefined"
-            , "null"
+            , <<"null">>
             , null
             , undefined
         }, {
             "JSON 101"
-            , "101"
+            , <<"101">>
             , 101
             , 101
         }, {
             "JSON 1.5"
-            , "1.50000000000000000000e+00"
+            , <<"1.5">>
             , 1.5
             , 1.5
         }, {
             "JSON array"
-            , "[1,2,3]"
+            , <<"[1,2,3]">>
             , [1,2,3]
             , [1,2,3]
         }, {
             "JSON object"
-            , "{\"key1\":\"a\",\"key2\":2}"
-            , {obj, [{"key1", <<"a">>}, {"key2", 2}] }
+            , <<"{\"key1\":\"a\",\"key2\":2}">>
+            , {struct, [{<<"key1">>, <<"a">>}, {<<"key2">>, 2}] }
             , {'#P', [{<<"key1">>, <<"a">>}, {<<"key2">>, 2}] }
         }, {
             "JSON object - UBF atom"
-            , "{\"$A\":\"atomname\"}"
-            , {obj, [{"$A", <<"atomname">>}] }
+            , <<"{\"$A\":\"atomname\"}">>
+            , {struct, [{<<"$A">>, <<"atomname">>}] }
             , atomname
         }, {
             "JSON object - UBF string"
-            , "{\"$S\":\"stringval\"}"
-            , {obj, [{"$S", <<"stringval">>}] }
+            , <<"{\"$S\":\"stringval\"}">>
+            , {struct, [{<<"$S">>, <<"stringval">>}] }
             , {'#S', "stringval"}
         }, {
             "JSON object - UBF tuple"
-            , "{\"$T\":[\"a\",2]}"
-            , {obj, [{"$T", [<<"a">>, 2]}] }
+            , <<"{\"$T\":[\"a\",2]}">>
+            , {struct, [{<<"$T">>, [<<"a">>, 2]}] }
             , {<<"a">>, 2}
         }, {
             "JSON object - UBF record"
-            , "{\"$R\":\"dummyrecord\",\"bar\":\"2\",\"foo\":1}"
-            , {obj, [{"$R", <<"dummyrecord">>}, {"bar", <<"2">>}, {"foo", 1}] }
+            , <<"{\"$R\":\"dummyrecord\",\"bar\":\"2\",\"foo\":1}">>
+            , {struct, [{<<"$R">>, <<"dummyrecord">>}, {<<"bar">>, <<"2">>}, {<<"foo">>, 1}] }
             , {dummyrecord, 1, <<"2">>}
         }
     ].

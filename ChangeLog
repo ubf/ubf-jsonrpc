@@ -1,3 +1,11 @@
+2010-06-15 00:30 JST  norton
+	* src/jsf.erl, src/jsf_driver.erl, src/ubf_jsonrpc.erl,
+	src/ubf_jsonrpc_inets_httpc_simple.erl,
+	src/ubf_jsonrpc_inets_httpd_simple_auth.erl: Refactor and replace
+	the erlang-rfc4627 JSON encoder/decoder with MochiWeb's JSON
+	encoder/decoder for improved performance and to decrease memory
+	usage.
+
 2010-04-23 12:30 JST  norton
         * jsf.erl, jsf_driver.erl: Refactor to easily support new protocol
 	drivers.
@@ -16,7 +24,10 @@
 	Fritchie's changes to make AuthInfo optional
 
 2009-10-29 11:35 JST  norton
-        * src/Makefile, src/ubf_jsonrpc.erl, src/ubf_jsonrpc_inets_httpd_simple.erl, src/ubf_jsonrpc_inets_httpc_simple.erl, src/Unit-EUnit-Files/*: inets-based httpd module for JSON-RPC and UBF
+        * src/Makefile, src/ubf_jsonrpc.erl,
+	src/ubf_jsonrpc_inets_httpd_simple.erl,
+	src/ubf_jsonrpc_inets_httpc_simple.erl, src/Unit-EUnit-Files/*:
+	inets-based httpd module for JSON-RPC and UBF
 
 2009-10-14 24:00 JST  norton
         * ChangeLog: Add new ChangeLog
