@@ -10,6 +10,9 @@ To build
 1. Get and install an erlang system
    http://www.erlang.org
 
+   NOTE: UBF requires Erlang/OTP R13B01 or newer.  UBF has been tested
+   most recently with Erlang/OTP R13B04.
+
 2. Get and install ubf
    http://github.com/norton/ubf
 
