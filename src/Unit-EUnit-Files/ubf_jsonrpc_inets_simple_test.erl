@@ -1,10 +1,9 @@
-%%% $Id$
 %%% Description: eunit test for ubf and jsonrpc
 %%%-------------------------------------------------------------------
 
 -module(ubf_jsonrpc_inets_simple_test).
 
--include("eunit.hrl").
+-include_lib("eunit/include/eunit.hrl").
 
 -compile(export_all).
 

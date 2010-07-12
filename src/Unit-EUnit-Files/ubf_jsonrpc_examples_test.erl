@@ -3,7 +3,7 @@
 
 -module(ubf_jsonrpc_examples_test).
 
--include("eunit.hrl").
+-include_lib("eunit/include/eunit.hrl").
 
 -compile(export_all).
 
