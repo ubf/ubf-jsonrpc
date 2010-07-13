@@ -236,21 +236,21 @@ decode(X, Mod, Old) when is_list(X) ->
 decode(X, Mod, Old) when is_binary(X) ->
     New = <<Old/bitstring, X/bitstring>>,
     if
-        New==<<>> ->
-            {more, <<>>};
-        true ->
-            %% case gmt_mime:classify_charset(New) of
-            %%  '8bit' ->
-            %%      %% same crash as rfc4627.erl and xmerl_ucs.erl
-            %%      exit({ucs,{bad_utf8_character_code}});
-            %%  _ ->
-                    case catch mochijson2:decode(New) of
-                        {'EXIT',_} ->
-                            {error,syntax_error};
-                        JSON ->
-                            {ok, do_decode(JSON, Mod), <<>>}
-                    end
-            %% end
+	New==<<>> ->
+	    {more, <<>>};
+	true ->
+	    case gmt_charset:classify(New) of
+		'8bit' ->
+		    %% same crash as rfc4627.erl and xmerl_ucs.erl
+		    exit({ucs,{bad_utf8_character_code}});
+		_ ->
+		    case catch mochijson2:decode(New) of
+			{'EXIT',_} ->
+			    {error,syntax_error};
+			JSON ->
+			    {ok, do_decode(JSON, Mod), <<>>}
+		    end
+	    end
     end.
 
 do_decode(X, _Mod) when is_binary(X); is_integer(X); is_float(X) ->

@@ -1,9 +1,11 @@
+*.P
 *.beam
+*.boot
 *.d
 *.huc
-*.P
-
+*.log
+*.script
+.bom_*
+.depends-*
+.deps/
 erl_crash.dump
-
-src/check.log
-

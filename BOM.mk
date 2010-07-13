@@ -1,52 +1,37 @@
 ###----------------------------------------------------------------------
 ### Copyright (c) 2007-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
-###
+### 
 ### Licensed under the Apache License, Version 2.0 (the "License");
 ### you may not use this file except in compliance with the License.
 ### You may obtain a copy of the License at
-###
+### 
 ###     http://www.apache.org/licenses/LICENSE-2.0
-###
+### 
 ### Unless required by applicable law or agreed to in writing, software
 ### distributed under the License is distributed on an "AS IS" BASIS,
 ### WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ### See the License for the specific language governing permissions and
 ### limitations under the License.
 ###
-### File    : Makefile
-### Purpose : 
+### File    : BOM.mk
+### Purpose :
 ###----------------------------------------------------------------------
 
-MODULES = \
-	jsf \
-	jsf_utils \
-	jsf_driver \
-	ubf_jsonrpc \
-	ubf_jsonrpc_inets_httpc_simple \
-	ubf_jsonrpc_inets_httpd_simple \
-	ubf_jsonrpc_inets_httpd_simple_auth
+$(ME)/.bom_config: $(erl-bom-mk)
+	$(erl-bom-config)
+	touch $@
 
-TESTS = \
-	test_plugin \
-	jsf_test
+$(ME)/.bom_build: $(ME)/.bom_config $(erl-bom-mk)
+	$(erl-bom-build)
+	touch $@
 
-EUNITTESTS = \
-	ubf_jsonrpc_examples_test \
-	ubf_jsonrpc_stateless_plugin \
-	ubf_jsonrpc_inets_simple_test
+$(ME)/.bom_install: $(ME)/.bom_build $(erl-bom-mk)
+	$(erl-bom-install)
+	touch $@
 
-PRIVS =
+$(ME)/.bom_test: $(ME)/.bom_install $(erl-bom-mk)
+	$(erl-bom-test)
 
-# include erl make
-include $(shell cat ../.depends-gmt-bom)/make/erl_make.mk
+$(ME)/.bom_clean: $(erl-bom-mk)
+	$(erl-bom-clean)
 
-# standard targets
-check: all
-	-rm -f ./*.log
-	-$(RUNERL1) -noinput -noshell -pz $(EUNITTEST_DIR) -pz $(PRIV_DIR) \
-		-s jsf_test tests \
-		-s inets start \
-		-s ubf_jsonrpc_examples_test do_eunit \
-		-s ubf_jsonrpc_inets_simple_test do_eunit \
-		-s erlang halt \
-		| tee ./check.log
