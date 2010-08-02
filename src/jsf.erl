@@ -41,7 +41,7 @@
 %%          null (atom)
 %% '''
 %%
-%% == Mapping: JSON -> Erlang Terms, using erlang-rfc46267 ==
+%% == Mapping: JSON -> Erlang Terms, using mochiweb ==
 %% ```
 %% json::object() = {struct, [json::pair()]}
 %%
