@@ -1,3 +1,7 @@
+2010-08-07 13:00 JST  norton
+	* Update README, Makefile, BOM.mk, and GMBOM files for building
+	with bom.sh
+
 2010-06-15 00:30 JST  norton
 	* src/jsf.erl, src/jsf_driver.erl, src/ubf_jsonrpc.erl,
 	src/ubf_jsonrpc_inets_httpc_simple.erl,
