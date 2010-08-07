@@ -16,6 +16,10 @@ To download
          insteadOf = git://github.com/norton/src/erl-tools/gmt-bom.git
     [url "git://github.com/norton/ubf.git"]
          insteadOf = git://github.com/norton/src/erl-tools/ubf.git
+    [url "git://github.com/norton/gmt-util.git"]
+         insteadOf = git://github.com/norton/src/erl-apps/gmt-util.git
+    [url "git://github.com/norton/mochiweb.git"]
+         insteadOf = git://github.com/norton/src/erl-third-party/mochiweb.git
 
   NOTE: UBF requires git version 1.7.x or newer.  UBF has been tested
   most recently with git version 1.7.1.1.
