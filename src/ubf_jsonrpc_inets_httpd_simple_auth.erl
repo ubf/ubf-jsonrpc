@@ -1,6 +1,10 @@
 -module(ubf_jsonrpc_inets_httpd_simple_auth, [CONTRACT, URL, SUBST_AUTHINFO]).
 
+-ifdef(new_inets).
+-include_lib("inets/src/http_server/httpd.hrl").
+-else.
 -include_lib("inets/src/httpd.hrl").
+-endif.
 
 -export([do/1]).
 
@@ -29,7 +33,7 @@ do_rpc(#mod{init_data=InitData
                     AuthInfo = InitData,
                     {JsonResult, JsonError, _JsonStatus, JsonId} = do_jsonrpc(AuthInfo, RequestBody, CONTRACT),
                     ResponseBody =
-			binary_to_list(iolist_to_binary(ubf_jsonrpc:rpc_v11_res_encode(JsonResult, JsonError, JsonId, CONTRACT))),
+                        binary_to_list(iolist_to_binary(ubf_jsonrpc:rpc_v11_res_encode(JsonResult, JsonError, JsonId, CONTRACT))),
                     ResponseHead = [{code,200}
                                     , {content_type, "application/json; charset=utf-8"}
                                     , {content_length, integer_to_list(length(ResponseBody))}],

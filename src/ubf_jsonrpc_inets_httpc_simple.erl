@@ -1,6 +1,10 @@
 -module(ubf_jsonrpc_inets_httpc_simple).
 
+-ifdef(new_inets).
+-include_lib("inets/src/http_server/httpd.hrl").
+-else.
 -include_lib("inets/src/httpd.hrl").
+-endif.
 
 -export([do/4, do/6, do/7]).
 
@@ -39,7 +43,7 @@ do(Url, Contract, Request, Id, HTTPOptions, Options) ->
 %% do/7
 do(Url, Contract, Request, Id, HTTPOptions, Options, SubstAuthInfoP) ->
     {_AuthInfo, EncodedReq} =
-	ubf_jsonrpc:rpc_v11_req_encode(Request, Id, Contract, SubstAuthInfoP),
+        ubf_jsonrpc:rpc_v11_req_encode(Request, Id, Contract, SubstAuthInfoP),
     Encoder = mochijson2:encoder([{utf8, true}]),
     RequestBody = iolist_to_binary(Encoder(EncodedReq)),
     case do_post(Url, RequestBody, HTTPOptions, [{body_format, binary}|Options]) of
@@ -61,7 +65,7 @@ do_post(Url, RequestBody, HTTPOptions, Options) ->
                    , {"content-type", "application/json; charset=utf-8"}
                    , {"content-length", integer_to_list(size(RequestBody))}],
     Request = {Url, RequestHead, [], RequestBody},
-    Response = http:request(post, Request, HTTPOptions, Options),
+    Response = httpc:request(post, Request, HTTPOptions, Options),
     case Response of
         {ok, {{"HTTP/1.1", Code, _},
               [{"connection", "close"}
