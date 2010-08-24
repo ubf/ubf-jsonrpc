@@ -1,5 +1,5 @@
 %%%----------------------------------------------------------------------
-%%% Description: JSON RPC Implmentation Utilities
+%%% Description: JSON RPC Implementation Utilities
 %%%----------------------------------------------------------------------
 
 -ifndef(jsonrpc_impl).
