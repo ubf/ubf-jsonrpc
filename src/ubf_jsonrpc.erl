@@ -118,7 +118,7 @@ rpc_v11_req_encode(Method, Id, _UBFMod, _SubstAuthInfoP) when is_atom(Method) ->
     {undefined, {struct, [{<<"version">>, <<"1.1">>}, {<<"id">>, Id}, {<<"method">>, jsf:atom_to_binary(Method)}, {<<"params">>, []}]}};
 
 rpc_v11_req_encode(X, Id, UBFMod, SubstAuthInfoP)
-  when is_tuple(X), size(X) > 1, is_atom(element(1, X)),
+  when tuple_size(X) > 1, is_atom(element(1, X)),
        is_boolean(SubstAuthInfoP) ->
     [Method, Param0|Params_rest] = tuple_to_list(X),
     {Method, AuthInfo, Params} =
