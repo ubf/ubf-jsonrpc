@@ -192,10 +192,10 @@ with the "$R", "$T", and "$A" notation (for records, tuples, and
 atoms) into whatever object is most convenient.
 
 
-NOTE: Gemini Mobile Technologies, Inc. has implemented a module for
+TIP: Gemini Mobile Technologies, Inc. has implemented a module for
 classifying the input character set to detect non-UTF8 JSON inputs.
-This module has not yet been released to the open-source world.
-Hence, this application assumes all JSON inputs are valid UTF8.
+This module has been released to the open-source world
+(http://github.com/norton/gmt-util/blob/master/src/gmt_charset.erl).
 
 
 What is JSON-RPC?
