@@ -86,6 +86,7 @@ all_actual_tests_inets_simple() ->
 
 %% setup
 test_setup() ->
+    true = code:add_patha("../test/Unit-EUnit-Files"),
     application:start(inets),
     ServerRoot = filename:join([filename:dirname(code:priv_dir(inets)), "examples", "server_root"]),
     DocumentRoot = filename:join(ServerRoot, "htdocs"),
@@ -98,7 +99,9 @@ test_setup() ->
 
 %% teardown
 test_teardown({Pid,_Port}) ->
-    ok = inets:stop(httpd, Pid).
+    ok = inets:stop(httpd, Pid),
+    true = code:del_path("../test/Unit-EUnit-Files"),
+    ok.
 
 %% url
 test_url({_Pid,Port}, Host, Url) ->

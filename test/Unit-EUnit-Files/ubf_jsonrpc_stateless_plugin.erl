@@ -12,7 +12,7 @@
 
 %% NOTE the following two lines
 -compile({parse_transform,contract_parser}).
--add_contract("./Unit-EUnit-Files/ubf_jsonrpc_stateless_plugin").
+-add_contract("./test/Unit-EUnit-Files/ubf_jsonrpc_stateless_plugin").
 
 info() ->
     "I am a stateless server".

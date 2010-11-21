@@ -1,11 +1,8 @@
-*.P
+*.app
 *.beam
 *.boot
-*.d
 *.huc
 *.log
 *.script
-.bom_*
-.depends-*
-.deps/
+.eunit/
 erl_crash.dump

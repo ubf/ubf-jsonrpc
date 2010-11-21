@@ -1,0 +1,18 @@
+%%% -*- mode: erlang -*-
+
+{application, ubf_jsonrpc,
+ [
+  {description, "Universal Binary Format and JavaScript Object Notation RPC"},
+  {vsn, "0.01"},
+  {registered, []},
+  {applications, [kernel, stdlib, sasl]},
+  {modules, [jsf.erl
+             , jsf_driver.erl
+             , jsf_utils.erl
+             , ubf_jsonrpc.erl
+             , ubf_jsonrpc_inets_httpc_simple.erl
+             , ubf_jsonrpc_inets_httpd_simple.erl
+             , ubf_jsonrpc_inets_httpd_simple_auth.erl
+            ]}
+ ]
+}.
