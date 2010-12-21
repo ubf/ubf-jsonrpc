@@ -32,7 +32,6 @@ encode_v11_without_authinfo_test() ->
 %%        {"method",<<"some_rpc_func">>},
 %%        {"params",[777]}]}}
 
-
 encode_v11_with_authinfo_test() ->
     UbfMod = mod_not_needed_for_encoding_simple_types_like_integers,
     ArbitraryAuthInfoStuff = {whatever, {auth, info}, {{{{stuff}}}}},
@@ -41,9 +40,3 @@ encode_v11_with_authinfo_test() ->
 	  {some_rpc_func, ArbitraryAuthInfoStuff, 777},
 	  <<"x_id">>, UbfMod, true).
 
-using_httpc_client_do_test() ->
-    UbfMod = mod_not_needed_for_encoding_simple_types_like_integers,
-    _ = ubf_jsonrpc_inets_httpc_simple:do(
-	  "http://localhost:7777/doit", UbfMod,
-	  {some_rpc_func, [777, -42]}, <<"foo_id">>,[],[],false),
-    ok.
