@@ -90,7 +90,7 @@ test_setup() ->
     application:start(inets),
     ServerRoot = filename:join([filename:dirname(code:priv_dir(inets)), "examples", "server_root"]),
     DocumentRoot = filename:join(ServerRoot, "htdocs"),
-    Options = [{port, 0}, {bind_address, ?HOST}, {server_name,"httpd_test"}
+    Options = [{port, 0}, {bind_address, any}, {server_name,"httpd_test"}
                , {server_root, ServerRoot}, {document_root, DocumentRoot}
                , {modules, [?MODULE, mod_get]}],
     {ok, Pid} = inets:start(httpd, Options),
