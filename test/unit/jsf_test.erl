@@ -2,6 +2,8 @@
 
 -compile(export_all).
 
+-include_lib("eunit/include/eunit.hrl").
+
 -define(PRINTRESULT,
     case Out of
         Exp ->
@@ -14,7 +16,7 @@
 ).
 
 
-tests() ->
+jsf_test() ->
     true = test_json_decode_1(),
     true = test_json_decode_2(),
     true = test_json_encode_1(),

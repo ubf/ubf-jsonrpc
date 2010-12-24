@@ -13,6 +13,6 @@
              , ubf_jsonrpc_inets_httpc_simple.erl
              , ubf_jsonrpc_inets_httpd_simple.erl
              , ubf_jsonrpc_inets_httpd_simple_auth.erl
-            ]}
- ]
-}.
+            ]},
+  {env, []}
+ ]}.
