@@ -1,4 +1,4 @@
--module(jsf_test).
+-module(jsf_tests).
 
 -compile(export_all).
 

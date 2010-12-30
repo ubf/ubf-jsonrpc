@@ -1,7 +1,7 @@
-%%% Description: eunit test for ubf and jsonrpc
+%%% Description: eunit tests for ubf and jsonrpc
 %%%-------------------------------------------------------------------
 
--module(ubf_jsonrpc_inets_simple_test).
+-module(ubf_jsonrpc_inets_simple_tests).
 
 -include_lib("eunit/include/eunit.hrl").
 

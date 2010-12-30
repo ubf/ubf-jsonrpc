@@ -1,7 +1,7 @@
 %%% Description: Executable examples for developer enlightenment.
 %%%-------------------------------------------------------------------
 
--module(ubf_jsonrpc_examples_test).
+-module(ubf_jsonrpc_examples_tests).
 
 -include_lib("eunit/include/eunit.hrl").
 
