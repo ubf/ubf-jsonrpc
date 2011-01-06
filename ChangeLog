@@ -1,3 +1,7 @@
+2011-01-07 01:15 JST  norton
+	* Prepare for v0.1 tag: refactor UBF and friends to use repo and
+	rebar tools.
+
 2010-08-07 13:00 JST  norton
 	* Update README, Makefile, BOM.mk, and GMBOM files for building
 	with bom.sh
