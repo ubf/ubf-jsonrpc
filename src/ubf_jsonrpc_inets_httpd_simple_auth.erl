@@ -1,9 +1,9 @@
 -module(ubf_jsonrpc_inets_httpd_simple_auth, [CONTRACT, URL, SUBST_AUTHINFO]).
 
--ifdef(new_inets).
--include_lib("inets/src/http_server/httpd.hrl").
--else.
+-ifdef(old_inets).
 -include_lib("inets/src/httpd.hrl").
+-else.
+-include_lib("inets/src/http_server/httpd.hrl").
 -endif.
 
 -export([do/1]).
