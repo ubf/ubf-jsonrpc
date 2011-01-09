@@ -1,4 +1,4 @@
--module(test_plugin).
+-module(jsf_test_plugin).
 
 -include("ubf.hrl").
 
@@ -13,7 +13,7 @@
 %% NOTE the following two lines
 
 -compile({parse_transform,contract_parser}).
--add_contract("./test/unit/test_plugin").
+-add_contract("./test/unit/jsf_test_plugin").
 
 info() -> "I am a test server".
 
