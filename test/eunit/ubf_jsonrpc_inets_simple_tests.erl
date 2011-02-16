@@ -8,15 +8,6 @@
 -compile(export_all).
 
 
-do_eunit() ->
-    case eunit:test(?MODULE) of
-        ok -> ok;
-        _ -> erlang:halt(1)
-    end.
-
-
-
-
 -define(HOST,     "127.0.0.1").
 -define(URL,      "/test").
 -define(CONTRACT, ubf_jsonrpc_stateless_plugin).

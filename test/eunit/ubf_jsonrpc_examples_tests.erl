@@ -7,11 +7,6 @@
 
 -compile(export_all).
 
-do_eunit() ->
-    case eunit:test(?MODULE) of
-        ok -> ok;
-        _ -> erlang:halt(1)
-    end.
 
 %% Result:
 %% {undefined,{obj,[{"version",<<"1.1">>},
@@ -22,8 +17,8 @@ do_eunit() ->
 encode_v11_without_authinfo_test() ->
     UbfMod = mod_not_needed_for_encoding_simple_types_like_integers,
     {undefined, _} =
-	ubf_jsonrpc:rpc_v11_req_encode(
-	  {some_rpc_func, 777}, <<"x_id">>, UbfMod, false).
+        ubf_jsonrpc:rpc_v11_req_encode(
+          {some_rpc_func, 777}, <<"x_id">>, UbfMod, false).
 
 %% Result:
 %% {{whatever,{auth,info},{{{{stuff}}}}},
@@ -36,7 +31,7 @@ encode_v11_with_authinfo_test() ->
     UbfMod = mod_not_needed_for_encoding_simple_types_like_integers,
     ArbitraryAuthInfoStuff = {whatever, {auth, info}, {{{{stuff}}}}},
     {ArbitraryAuthInfoStuff, _} =
-	ubf_jsonrpc:rpc_v11_req_encode(
-	  {some_rpc_func, ArbitraryAuthInfoStuff, 777},
-	  <<"x_id">>, UbfMod, true).
+        ubf_jsonrpc:rpc_v11_req_encode(
+          {some_rpc_func, ArbitraryAuthInfoStuff, 777},
+          <<"x_id">>, UbfMod, true).
 
