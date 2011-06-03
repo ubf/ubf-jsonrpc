@@ -115,7 +115,7 @@
 %% '''
 
 -module(jsf).
--behavior(contract_proto).
+-behaviour(contract_proto).
 
 -include("ubf.hrl").
 
