@@ -121,11 +121,16 @@
 
 -export([proto_vsn/0, proto_driver/0, proto_packet_type/0]).
 -export([encode/1, encode/2, do_encode/2]).
--export([decode_init/0, decode/1, decode/2, decode/3, do_decode/2]).
+-export([decode_init/0, decode_init/1, decode_init/2, decode/1, decode/2, decode/3]).
+-export([do_decode/2, do_decode/3]).
 
 -export([atom_to_binary/1]).
--export([binary_to_existing_atom/1]).
+-export([binary_to_atom/1, binary_to_existing_atom/1]).
 
+-record(state, {
+          safe=false :: boolean(),
+          binary= <<>> :: binary()
+         }).
 
 %% Dummy hack/kludge.
 -export([contract_records/0]).
@@ -221,7 +226,15 @@ encode_record(N, X, Keys, Acc, Mod) ->
 %%
 %%---------------------------------------------------------------------
 %%
-decode_init() -> {more, <<>>}.
+decode_init() ->
+    decode_init(false).
+
+decode_init(Safe) ->
+    decode_init(Safe, <<>>).
+
+decode_init(Safe, Binary) when is_binary(Binary) ->
+    State = #state{safe=Safe, binary=Binary},
+    {more, State}.
 
 decode(X) ->
     decode(X, ?MODULE).
@@ -229,97 +242,101 @@ decode(X) ->
 decode(X, Mod) ->
     decode(X, Mod, decode_init()).
 
-decode(X, Mod, {more, Old}) ->
-    decode(X, Mod, Old);
-decode(X, Mod, Old) when is_list(X) ->
-    decode(list_to_binary(X), Mod, Old);
-decode(X, Mod, Old) when is_binary(X) ->
-    New = <<Old/bitstring, X/bitstring>>,
-    if
-	New==<<>> ->
-	    {more, <<>>};
-	true ->
-	    case gmt_charset:classify(New) of
-		'8bit' ->
-		    %% same crash as rfc4627.erl and xmerl_ucs.erl
-		    exit({ucs,{bad_utf8_character_code}});
-		_ ->
-		    case catch mochijson2:decode(New) of
-			{'EXIT',_} ->
-			    {error,syntax_error};
-			JSON ->
-			    {ok, do_decode(JSON, Mod), <<>>}
-		    end
-	    end
+decode(X, Mod, {more, State}) ->
+    decode(X, Mod, State);
+decode(X, Mod, State) when is_list(X) ->
+    decode(list_to_binary(X), Mod, State);
+decode(X, Mod, #state{safe=Safe, binary=Old}=State) when is_binary(X) ->
+    case <<Old/binary, X/binary>> of
+        <<>> ->
+            {more, State#state{binary= <<>>}};
+        New ->
+            case gmt_charset:classify(New) of
+                '8bit' ->
+                    %% same crash as rfc4627.erl and xmerl_ucs.erl
+                    exit({ucs,{bad_utf8_character_code}});
+                _ ->
+                    case catch mochijson2:decode(New) of
+                        {'EXIT', _} ->
+                            {error, syntax_error};
+                        JSON ->
+                            {ok, do_decode(JSON, Mod, Safe), <<>>}
+                    end
+            end
     end.
 
-do_decode(X, _Mod) when is_binary(X); is_integer(X); is_float(X) ->
+do_decode(X, Mod) ->
+    do_decode(X, Mod, false).
+
+do_decode(X, _Mod, _Safe) when is_binary(X); is_integer(X); is_float(X) ->
     X;
-do_decode(X, _Mod) when is_atom(X) ->
-    decode_atom(X);
-do_decode(X, Mod) when is_list(X) ->
-    decode_list(X, Mod);
-do_decode({struct, [{<<"$A">>, X}]}, _Mod) ->
-    decode_atom(X);
-do_decode({struct, [{<<"$S">>, X}]}, _Mod) ->
+do_decode(X, _Mod, Safe) when is_atom(X) ->
+    decode_atom(X, Safe);
+do_decode(X, Mod, Safe) when is_list(X) ->
+    decode_list(X, Mod, Safe);
+do_decode({struct, [{<<"$A">>, X}]}, _Mod, Safe) ->
+    decode_atom(X, Safe);
+do_decode({struct, [{<<"$S">>, X}]}, _Mod, _Safe) ->
     decode_string(X);
-do_decode({struct, [{<<"$T">>, X}]}, Mod) ->
-    decode_tuple(X, Mod);
-do_decode({struct, X}, Mod) ->
+do_decode({struct, [{<<"$T">>, X}]}, Mod, Safe) ->
+    decode_tuple(X, Mod, Safe);
+do_decode({struct, X}, Mod, Safe) ->
     case lists:keytake(<<"$R">>, 1, X) of
         {value, {<<"$R">>, RecName}, Y} ->
-            decode_record(RecName, Y, Mod);
+            decode_record(RecName, Y, Mod, Safe);
         false ->
-            decode_proplist(X, Mod)
+            decode_proplist(X, Mod, Safe)
     end.
 
-decode_atom(true) ->
+decode_atom(true, _Safe) ->
     true;
-decode_atom(false) ->
+decode_atom(false, _Safe) ->
     false;
-decode_atom(null) ->
+decode_atom(null, _Safe) ->
     undefined;
-decode_atom(X) when is_binary(X) ->
-    binary_to_existing_atom(X).
+decode_atom(X, true) when is_binary(X) ->
+    binary_to_existing_atom(X);
+decode_atom(X, false) when is_binary(X) ->
+    binary_to_atom(X).
 
-decode_list(X, Mod) ->
-    decode_list(X, [], Mod).
+decode_list(X, Mod, Safe) ->
+    decode_list(X, [], Mod, Safe).
 
-decode_list([], Acc, _Mod) ->
+decode_list([], Acc, _Mod, _Safe) ->
     lists:reverse(Acc);
-decode_list([H|T], Acc, Mod) ->
-    NewAcc = [do_decode(H, Mod)|Acc],
-    decode_list(T, NewAcc, Mod).
+decode_list([H|T], Acc, Mod, Safe) ->
+    NewAcc = [do_decode(H, Mod, Safe)|Acc],
+    decode_list(T, NewAcc, Mod, Safe).
 
 decode_string(X) when is_binary(X) ->
     ?S(binary_to_list(X)).
 
-decode_proplist(X, Mod) when is_list(X) ->
-    ?P([ {K, do_decode(V, Mod)} || {K, V} <- X ]).
+decode_proplist(X, Mod, Safe) when is_list(X) ->
+    ?P([ {K, do_decode(V, Mod, Safe)} || {K, V} <- X ]).
 
-decode_tuple(L, Mod) ->
-    decode_tuple(L, [], Mod).
+decode_tuple(L, Mod, Safe) ->
+    decode_tuple(L, [], Mod, Safe).
 
-decode_tuple([], Acc, _Mod) ->
+decode_tuple([], Acc, _Mod, _Safe) ->
     list_to_tuple(lists:reverse(Acc));
-decode_tuple([H|T], Acc, Mod) ->
-    NewAcc = [do_decode(H, Mod)|Acc],
-    decode_tuple(T, NewAcc, Mod).
+decode_tuple([H|T], Acc, Mod, Safe) ->
+    NewAcc = [do_decode(H, Mod, Safe)|Acc],
+    decode_tuple(T, NewAcc, Mod, Safe).
 
-decode_record(RecNameStr, X, Mod) ->
-    RecName = binary_to_existing_atom(RecNameStr),
+decode_record(RecNameStr, X, Mod, Safe) ->
+    RecName = decode_atom(RecNameStr, Safe),
     Y = {RecName, length(X)},
     Keys = Mod:contract_record(Y),
-    decode_record(RecName, Keys, X, [], Mod).
+    decode_record(RecName, Keys, X, [], Mod, Safe).
 
-decode_record(RecName, [], [], Acc, _Mod) ->
+decode_record(RecName, [], [], Acc, _Mod, _Safe) ->
     list_to_tuple([RecName|lists:reverse(Acc)]);
-decode_record(RecName, [H|T], X, Acc, Mod) ->
+decode_record(RecName, [H|T], X, Acc, Mod, Safe) ->
     K = atom_to_binary(H),
     case lists:keytake(K, 1, X) of
         {value, {K, V}, NewX} ->
-            NewAcc = [do_decode(V, Mod)|Acc],
-            decode_record(RecName, T, NewX, NewAcc, Mod);
+            NewAcc = [do_decode(V, Mod, Safe)|Acc],
+            decode_record(RecName, T, NewX, NewAcc, Mod, Safe);
         false ->
             exit({badrecord, RecName})
     end.
@@ -330,6 +347,9 @@ decode_record(RecName, [H|T], X, Acc, Mod) ->
 %%
 atom_to_binary(X) ->
     list_to_binary(atom_to_list(X)).
+
+binary_to_atom(X) ->
+    list_to_atom(binary_to_list(X)).
 
 binary_to_existing_atom(X) ->
     list_to_existing_atom(binary_to_list(X)).
