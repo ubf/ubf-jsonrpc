@@ -251,7 +251,7 @@ decode(X, Mod, #state{safe=Safe, binary=Old}=State) when is_binary(X) ->
         <<>> ->
             {more, State#state{binary= <<>>}};
         New ->
-            case gmt_charset:classify(New) of
+            case jsf_charset:classify(New) of
                 '8bit' ->
                     %% same crash as rfc4627.erl and xmerl_ucs.erl
                     exit({ucs,{bad_utf8_character_code}});

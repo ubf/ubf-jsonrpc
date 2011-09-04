@@ -145,7 +145,7 @@ rpc_v11_req_decode(AuthInfo, X, UBFMod) ->
 
 rpc_v11_req_decode(AuthInfo, X, UBFMod, SubstAuthInfoP) ->
     try
-	case gmt_charset:classify(gmt_util:bin_ify(X)) of
+	case classify(X) of
 	    '8bit' ->
 		%% same crash as rfc4627.erl and xmerl_ucs.erl
 		exit({ucs,{bad_utf8_character_code}});
@@ -205,7 +205,7 @@ rpc_v11_res_decode_print(X, UBFMod) ->
     io:format("~s~n", [rpc_v11_res_decode(X, UBFMod)]).
 
 rpc_v11_res_decode(X, UBFMod) ->
-    case gmt_charset:classify(gmt_util:bin_ify(X)) of
+    case classify(X) of
 	'8bit' ->
 	    %% same crash as rfc4627.erl and xmerl_ucs.erl
 	    exit({ucs,{bad_utf8_character_code}});
@@ -220,4 +220,26 @@ rpc_v11_res_decode(X, UBFMod) ->
 		Other ->
 		    {error, Other}
 	    end
+    end.
+
+
+%%
+%%---------------------------------------------------------------------
+%%
+
+classify(X) ->
+    jsf_charset:classify(bin_ify(X)).
+
+bin_ify(X) when is_binary(X) ->
+    X;
+bin_ify(X) when is_list(X) ->
+    list_to_binary(X);
+bin_ify(X) when is_integer(X) ->
+    list_to_binary(integer_to_list(X));
+bin_ify(X) when is_atom(X) ->
+    case get(X) of
+        undefined -> B = list_to_binary(atom_to_list(X)),
+                     put(X, B),
+                     B;
+        B when is_binary(B) -> B
     end.
