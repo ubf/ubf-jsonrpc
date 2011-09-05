@@ -1,7 +1,26 @@
 
 This is ubf-jsonrpc, a framework for integrating UBF, JSF and
-JSON-RPC.  This repository depends on the ubf, gmt-util, and mochiweb
-open source repositories.
+JSON-RPC.  This repository depends on the ubf and mochiweb (actually
+only the mochijson2.erl module) open source repositories.
+
+
+Quick Start Recipe
+==================
+
+To download, build, and test the ubf_jsonrpc application in one shot,
+please follow this recipe:
+
+    $ mkdir working-directory-name
+    $ cd working-directory-name
+    $ git clone git://github.com/norton/ubf-jsonrpc.git ubf_jsonrpc
+    $ cd ubf_jsonrpc
+    $ ./rebar get-deps
+    $ ./rebar clean
+    $ ./rebar compile
+    $ ./rebar eunit
+
+For an alternative recipe with other "features" albeit more complex,
+please read further.
 
 
 To download
@@ -15,8 +34,13 @@ To download
 2. Install Repo
 
     $ mkdir -p ~/bin
-    $ wget -O - http://android.git.kernel.org/repo > ~/bin/repo
+    $ wget -O - https://github.com/android/tools_repo/raw/master/repo > ~/bin/repo
+    $ perl -i.bak -pe 's!git://android.git.kernel.org/tools/repo.git!git://github.com/android/tools_repo.git!;' ~/bin/repo
     $ chmod a+x ~/bin/repo
+
+    CAUTION: Since access to kernel.org has been shutdown due to
+    hackers, fetch and replace repo tool with android's GitHub
+    repository mirror.
 
 3. Create working directory
 
@@ -42,14 +66,14 @@ For futher information and help for related tools, please refer to the
 following links:
 
 - Erlang - http://www.erlang.org/
-  * *R14B01 has been tested most recently*
-  * *R13B01 or newer*
+  * *R13B04 or newer, R14B03 has been tested most recently*
 - Git - http://git-scm.com/
-  * *Git 1.5.4 or newer*
+  * *Git 1.5.4 or newer, Git 1.7.6.1 has been tested recently*
   * _required for Repo and GitHub_
 - GitHub - https://github.com
 - Python - http://www.python.org
-  * *Python 2.4 or newer (CAUTION: Python 3.x might be too new)*
+  * *Python 2.4 or newer, Python 2.7.1 has been tested most recently
+     (CAUTION: Python 3.x might be too new)*
   * _required for Repo_
 - Rebar - https://github.com/basho/rebar/wiki
 - Repo - http://source.android.com/source/git-repo.html
@@ -83,7 +107,7 @@ A. Dialyzer Testing _basic recipe_
    TIP: Check Makefile and dialyzer's documentation for further
    information.
 
-   A.2. Dialyze without specs
+   A.2. Dialyze with specs
 
    $ cd working-directory-name/src
    $ make dialyze
@@ -93,10 +117,10 @@ A. Dialyzer Testing _basic recipe_
    underneath rebar's .eunit directory.  Check Makefile for further
    information.
 
-   A.3. Dialyze with specs
+   A.3. Dialyze without specs
 
    $ cd working-directory-name/src
-   $ make dialyze-spec
+   $ make dialyze-nospec
 
 
 Documentation -- Where should I start?
@@ -184,7 +208,8 @@ atoms) into whatever object is most convenient.
 TIP: Gemini Mobile Technologies, Inc. has implemented a module for
 classifying the input character set to detect non-UTF8 JSON inputs.
 This module has been released to the open-source world
-(http://github.com/norton/gmt-util/blob/master/src/gmt_charset.erl).
+(http://github.com/norton/gmt-util/blob/master/src/gmt_charset.erl)
+and copied to this repository as the jsf_charset.erl module.
 
 
 What is JSON-RPC?
