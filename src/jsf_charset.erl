@@ -21,15 +21,6 @@
 
 -export([classify/1, classify2/1, classify2/2, valid8/1, force_to_utf8/1]).
 
-%%
-%% Exported Function Specs
-%%
-
--spec classify(In::binary()) -> ascii | jis | utf8 | '8bit'.
--spec classify2(In::binary()) -> {'7bit'|'8bit'|'iso-2022'|'utf8', non_neg_integer()}.
--spec classify2(In::binary(), Max::pos_integer()|undefined) -> {'7bit'|'8bit'|'iso-2022'|'utf8', non_neg_integer()}.
--spec valid8(In::binary()) -> {true, binary()} | false | fuzzy.
--spec force_to_utf8(In::binary()) -> binary().
 
 %% UTF-8 is defined like this with exception of the extra 2 non-characters
 %%
@@ -45,9 +36,11 @@
 %% UTF8-tail = x80-BF
 
 %% @doc looks at the In and tries to classify the string as either
-%% 'ascii' (7bit), 'jis' (7bit) or 'utf8' or '8bit'. Classification
-%% is strict and fails quickly to 8bit if an 8bit byte is found.
-%% @see classify2/2 for a less strict classifier.
+%% 'ascii' (7bit), 'jis' (7bit) or 'utf8' or '8bit'. Classification is
+%% strict and fails quickly to 8bit if an 8bit byte is found. @see
+%% classify2/2 for a less strict classifier.
+
+-spec classify(In::binary()) -> ascii | jis | utf8 | '8bit'.
 classify(In) ->
     classify(In, ascii).
 
@@ -125,8 +118,12 @@ classify(_, _, _, _) ->
 %% of bytes can be specified to reduce the overhead. Classification allows
 %% for a certain amount of misc-bytes in the data so for example a bad byte
 %% in what is otherwise perfect utf-8 will still be classified as utf8.
+
+-spec classify2(In::binary()) -> {'7bit'|'8bit'|'iso-2022'|'utf8', non_neg_integer()}.
 classify2(In) ->
     classify2(In, undefined).
+
+-spec classify2(In::binary(), Max::pos_integer()|undefined) -> {'7bit'|'8bit'|'iso-2022'|'utf8', non_neg_integer()}.
 classify2(In, undefined) ->
     classify2a(In, #state{});
 classify2(In, Max) when is_integer(Max) ->
@@ -202,6 +199,8 @@ classify2_finalize(#state{eight=E}) ->
 %% that utf8 character. If it is not utf8, then it returns false. If the
 %% stream ends with a truncated potential utf-8, it returns 'fuzzy' as its
 %% not certain if it would be a utf-8 character if we had more data or not.
+
+-spec valid8(In::binary()) -> {true, binary()} | false | fuzzy.
 valid8(<<>>) ->
     false;
 valid8(<<H,T/binary>>) ->
@@ -262,6 +261,8 @@ valid8(_, _, _) ->
 %% that it indeed is utf8. Any 8bit bytes which don't conform to utf8 including
 %% trailing bytes (perhaps truncated data), will be mapped to the '?' character.
 %% This function returns utf8 output (hopefully same as input).
+
+-spec force_to_utf8(In::binary()) -> binary().
 force_to_utf8(In) ->
     case force_to_utf8(In, []) of
         [] ->

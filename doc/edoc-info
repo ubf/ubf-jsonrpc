@@ -1,0 +1,5 @@
+{application,ubf_jsonrpc}.
+{packages,[]}.
+{modules,[jsf,jsf_charset,jsf_driver,jsf_utils,ubf_jsonrpc,
+          ubf_jsonrpc_inets_httpc_simple,ubf_jsonrpc_inets_httpd_simple,
+          ubf_jsonrpc_inets_httpd_simple_auth]}.

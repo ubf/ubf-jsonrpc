@@ -3,7 +3,7 @@
 {application, ubf_jsonrpc,
  [
   {description, "Universal Binary Format and JavaScript Object Notation RPC"},
-  {vsn, "0.1.3"},
+  {vsn, git},
   {registered, []},
   {applications, [kernel, stdlib, sasl]},
   {modules, [jsf.erl
