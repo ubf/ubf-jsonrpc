@@ -6,12 +6,10 @@
 * [Function Details](#functions)
 
 
-Low-level utilities for JSF.
+<p>Low-level utilities for JSF.
+-------------------------------------------------------------------</p>.
 
-<a name="description"></a>
-
-##Description##
-  -------------------------------------------------------------------<a name="index"></a>
+<a name="index"></a>
 
 ##Function Index##
 

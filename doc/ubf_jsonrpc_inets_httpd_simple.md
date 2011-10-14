@@ -12,8 +12,14 @@
 ##Function Index##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#new-2">new/2</a></td><td>Fake being an Erlang parameterized module, by exporting a new()       
-function.</td></tr><tr><td valign="top"><a href="#new-3">new/3</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#new-2">new/2</a></td><td><p>Fake being an Erlang parameterized module, by exporting a new()
+function.</p>
+
+
+<pre><tt>Erlang parameterized modes don\'t support variable # of args for
+its auto-generated new() function.  So we fake it here, calling the
+new func for the real parameterized module.</tt></pre>
+.</td></tr><tr><td valign="top"><a href="#new-3">new/3</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
@@ -31,14 +37,15 @@ function.</td></tr><tr><td valign="top"><a href="#new-3">new/3</a></td><td></td>
 
 
 
+<p>Fake being an Erlang parameterized module, by exporting a new()
+function.</p>
 
 
-Fake being an Erlang parameterized module, by exporting a new()       
-function.
+<pre><tt>Erlang parameterized modes don\'t support variable # of args for
+its auto-generated new() function.  So we fake it here, calling the
+new func for the real parameterized module.</tt></pre>
 
-Erlang parameterized modes don't support variable # of args for
-its auto-generated new() function.  So we fake it here, calling
-the new func for the real parameterized module.<a name="new-3"></a>
+<a name="new-3"></a>
 
 ###new/3##
 

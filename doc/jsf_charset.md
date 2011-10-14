@@ -12,9 +12,20 @@
 ##Function Index##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#classify-1">classify/1</a></td><td>looks at the In and tries to classify the string as either
-'ascii' (7bit), 'jis' (7bit) or 'utf8' or '8bit'.</td></tr><tr><td valign="top"><a href="#classify2-1">classify2/1</a></td><td>classify2 runs through a binary byte-by-byte and tries to classify
-if as either '7bit','8bit','iso-2022' or 'utf8'.</td></tr><tr><td valign="top"><a href="#classify2-2">classify2/2</a></td><td></td></tr><tr><td valign="top"><a href="#force_to_utf8-1">force_to_utf8/1</a></td><td></td></tr><tr><td valign="top"><a href="#valid8-1">valid8/1</a></td><td>Checks if the Input starts with a valid utf8 character.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#classify-1">classify/1</a></td><td><p>looks at the In and tries to classify the string as either
+<tt>ascii</tt> (7bit), <tt>jis</tt> (7bit) or <tt>utf8</tt> or <tt>8bit</tt>. Classification is
+strict and fails quickly to 8bit if an 8bit byte is found. @see
+classify2/2 for a less strict classifier.</p>.</td></tr><tr><td valign="top"><a href="#classify2-1">classify2/1</a></td><td><p>classify2 runs through a binary byte-by-byte and tries to
+classify if as either <tt>7bit</tt>, <tt>8bit</tt>, <tt>iso-2022</tt> or <tt>utf8</tt>. For big
+data a max number of bytes can be specified to reduce the
+overhead. Classification allows for a certain amount of misc-bytes
+in the data so for example a bad byte in what is otherwise perfect
+utf-8 will still be classified as utf8.</p>.</td></tr><tr><td valign="top"><a href="#classify2-2">classify2/2</a></td><td></td></tr><tr><td valign="top"><a href="#force_to_utf8-1">force_to_utf8/1</a></td><td></td></tr><tr><td valign="top"><a href="#valid8-1">valid8/1</a></td><td><p>Checks if the Input starts with a valid utf8 character. If it
+is utf8 it returns true and a binary starting from the next byte
+following that utf8 character. If it is not utf8, then it returns
+false. If the stream ends with a truncated potential utf-8, it
+returns <tt>fuzzy</tt> as its not certain if it would be a utf-8 character
+if we had more data or not.</p>.</td></tr></table>
 
 
 <a name="functions"></a>
@@ -34,10 +45,11 @@ if as either '7bit','8bit','iso-2022' or 'utf8'.</td></tr><tr><td valign="top"><
 
 
 
-looks at the In and tries to classify the string as either
-'ascii' (7bit), 'jis' (7bit) or 'utf8' or '8bit'. Classification is
+<p>looks at the In and tries to classify the string as either
+<tt>ascii</tt> (7bit), <tt>jis</tt> (7bit) or <tt>utf8</tt> or <tt>8bit</tt>. Classification is
 strict and fails quickly to 8bit if an 8bit byte is found. @see
-classify2/2 for a less strict classifier.<a name="classify2-1"></a>
+classify2/2 for a less strict classifier.</p>
+<a name="classify2-1"></a>
 
 ###classify2/1##
 
@@ -50,11 +62,13 @@ classify2/2 for a less strict classifier.<a name="classify2-1"></a>
 
 
 
-classify2 runs through a binary byte-by-byte and tries to classify
-if as either '7bit','8bit','iso-2022' or 'utf8'. For big data a max number
-of bytes can be specified to reduce the overhead. Classification allows
-for a certain amount of misc-bytes in the data so for example a bad byte
-in what is otherwise perfect utf-8 will still be classified as utf8.<a name="classify2-2"></a>
+<p>classify2 runs through a binary byte-by-byte and tries to
+classify if as either <tt>7bit</tt>, <tt>8bit</tt>, <tt>iso-2022</tt> or <tt>utf8</tt>. For big
+data a max number of bytes can be specified to reduce the
+overhead. Classification allows for a certain amount of misc-bytes
+in the data so for example a bad byte in what is otherwise perfect
+utf-8 will still be classified as utf8.</p>
+<a name="classify2-2"></a>
 
 ###classify2/2##
 
@@ -89,8 +103,9 @@ in what is otherwise perfect utf-8 will still be classified as utf8.<a name="cla
 
 
 
-Checks if the Input starts with a valid utf8 character. If it is
-utf8 it returns true and a binary starting from the next byte following
-that utf8 character. If it is not utf8, then it returns false. If the
-stream ends with a truncated potential utf-8, it returns 'fuzzy' as its
-not certain if it would be a utf-8 character if we had more data or not.
+<p>Checks if the Input starts with a valid utf8 character. If it
+is utf8 it returns true and a binary starting from the next byte
+following that utf8 character. If it is not utf8, then it returns
+false. If the stream ends with a truncated potential utf-8, it
+returns <tt>fuzzy</tt> as its not certain if it would be a utf-8 character
+if we had more data or not.</p>

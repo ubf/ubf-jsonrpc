@@ -25,9 +25,9 @@ do(Url, Contract, Request, Id, HTTPOptions, Options) ->
 %%       {ok, term() | undefined, term() | undefined, string()} | {error,term()}
 %% @doc Send an atom/tuple RPC call request to a JSON-RPC service at Url.
 %%
-%% Per JSON-RPC definition, if we return an 'ok' 4-tuple, either the
-%% 2nd element will be 'undefined' (i.e. call failed, see 3rd element) or the
-%% 3rd element will be 'undefined' (i.e. call succeeded, see 2nd element).
+%% Per JSON-RPC definition, if we return an +ok+ 4-tuple, either the
+%% 2nd element will be +undefined+ (i.e. call failed, see 3rd element) or the
+%% 3rd element will be +undefined+ (i.e. call succeeded, see 2nd element).
 %%
 %% See the Inets app docs for http:request/4 for definition of HTTPOptions
 %% and Options arguments.

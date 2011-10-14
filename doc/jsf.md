@@ -6,144 +6,186 @@
 * [Function Details](#functions)
 
 
-Functions for JSON<->Erlang data conversion.
+<p>Functions for JSON<[8594,69,114,108,97,110,103,32,100,97,116,97,32,99,111,110,118,101,114,115,
+ 105,111,110,46]</p>
+
+
+<pre><tt>For most purposes, these functions are not called by code outside of
+this library: Erlang client &amp; Erlang server application code usually
+have no need to use these functions.</tt></pre>
 
 
 
-__Behaviours:__ [`contract_proto`](https://github.com/norton/ubf/blob/master/doc/contract_proto.md).<a name="description"></a>
-
-##Description##
+<pre><tt>== Links</tt></pre>
 
 
 
-
-For most purposes, these functions are not called by code outside of
-this library: Erlang client & Erlang server application code usually  
-have no need to use these functions.
-
-
-
-###<a name="Links">Links</a>##
-
-
-
-* http://www.erlang-projects.org/Public/news/ejson/view
-
-* http://www.erlang.org/eeps/eep-0018.html
-
-* http://www.erlang.org/ml-archive/erlang-questions/200511/msg00193.html
-
-* http://www.ietf.org/rfc/rfc4627.txt
-
-* http://www.json.org/
-
-* http://www.lshift.net/blog/2007/02/17/json-and-json-rpc-for-erlang
-
-* http://www.json.com/json-schema-proposal/
+<pre><tt><ul>
+<li> http://www.erlang-projects.org/Public/news/ejson/view </li>
+<li> http://www.erlang.org/eeps/eep-0018.html </li>
+<li> http://www.erlang.org/ml-archive/erlang-questions/200511/msg00193.html </li>
+<li> http://www.ietf.org/rfc/rfc4627.txt </li>
+<li> http://www.json.org/ </li>
+<li> http://www.lshift.net/blog/2007/02/17/json-and-json-rpc-for-erlang </li>
+<li> http://www.json.com/json-schema-proposal/ </li>
+</ul></tt></pre>
 
 
 
-
-
-###<a name="JSON_Basic_Data_Types">JSON Basic Data Types</a>##
-
-<pre>  object
-            {}
-            { members }
-  members
-            pair
-            pair, members
-  pair
-            string : value
-  array
-           []
-           [ elements ]
-  elements
-           value
-           value, elements
-  value
-           string
-           number
-           object
-           true (atom)
-           false (atom)
-           null (atom)</pre>
-
-
-
-###<a name="Mapping:_JSON_->_Erlang_Terms,_using_mochiweb">Mapping: JSON -> Erlang Terms, using mochiweb</a>##
-
-<pre>  json::object() = {struct, [json::pair()]}
- 
-  json::pair() = {string(), json::value()}
-       string() = [byte()]
-       byte() = integer()
- 
-  json::array() = [json::value()]
- 
-  json::value() = json::object() | json::array() | json::number() | json::string() | json::true() | json::false() | json::null()
- 
-  json::number() = integer() | float()
- 
-  json::string() = binary()
- 
-  json::true() = true
-  json::false() = false
-  json::null() = null</pre>
+<pre><tt>== JSON Basic Data Types
+------
+object
+          {}
+          { members }
+members
+          pair
+          pair, members
+pair
+          string : value
+array
+         []
+         [ elements ]
+elements
+         value
+         value, elements
+value
+         string
+         number
+         object
+         true (atom)
+         false (atom)
+         null (atom)
+------</tt></pre>
 
 
 
-###<a name="Mapping:_UBF_->_Erlang_Terms">Mapping: UBF -> Erlang Terms</a>##
-
-<pre>  ubf::tuple() = tuple()
- 
-  ubf::list() = list()
- 
-  ubf::number = integer() | float()
- 
-  ubf::string() = {'$S', [integer()]}
- 
-  ubf::proplist() = {'$P', [{term(), term()}]}
- 
-  ubf::binary() = binary()
- 
-  ubf::true() = true
-  ubf::false() = false
-  ubf::undefined() = undefined
- 
-  ubf::atom() = atom()
- 
-  ubf::record() = record()</pre>
+<pre><tt>== Mapping: JSON -> Erlang Terms, using mochiweb
+------
+json::object() = {struct, [json::pair()]}</tt></pre>
 
 
 
-###<a name="Mapping:_UBF_value_->_JSON_value">Mapping: UBF value -> JSON value</a>##
+<pre><tt>json::pair() = {string(), json::value()}
+     string() = [byte()]
+     byte() = integer()</tt></pre>
 
-<pre>  ubf::tuple() = {struct, [{<<"$T">>, ubf::list()}]}
- 
-  ubf::list() = [value()]
- 
-  ubf::number() = integer() | float()
- 
-  ubf::string() = {struct, [{<<"$S">>, binary()}]}
- 
-  ubf::proplist() = {struct, [{binary(), value()}]}
- 
-  ubf::binary() = binary()
- 
-  ubf::true() = true
-  ubf::false() = false
-  ubf::undefined() = null
- 
-  ubf::atom() = {struct, [{<<"$A">>, atomname()}]}
-       atomname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the actual atom
- 
-  ubf::record() = {struct, [{<<"$R">>, recordname()}] ++ [recordpair()]}
-       recordname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record's name
-       recordpair() = {recordkey(), value()}
-       recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key's name
- 
-  value() = ubf::tuple() | ubf::list() | ubf::number() | ubf::string() | ubf::binary() | ubf::true() | ubf::false() | ubf::undefined() | ubf::atom() | ubf::record()</pre><a name="index"></a>
+
+
+<pre><tt>json::array() = [json::value()]</tt></pre>
+
+
+
+<pre><tt>json::value() = json::object() | json::array() | json::number() | json::string() | json::true() | json::false() | json::null()</tt></pre>
+
+
+
+<pre><tt>json::number() = integer() | float()</tt></pre>
+
+
+
+<pre><tt>json::string() = binary()</tt></pre>
+
+
+
+<pre><tt>json::true() = true
+json::false() = false
+json::null() = null
+------</tt></pre>
+
+
+
+<pre><tt>== Mapping: UBF -> Erlang Terms
+------
+ubf::tuple() = tuple()</tt></pre>
+
+
+
+<pre><tt>ubf::list() = list()</tt></pre>
+
+
+
+<pre><tt>ubf::number = integer() | float()</tt></pre>
+
+
+
+<pre><tt>ubf::string() = {'$S', [integer()]}</tt></pre>
+
+
+
+<pre><tt>ubf::proplist() = {'$P', [{term(), term()}]}</tt></pre>
+
+
+
+<pre><tt>ubf::binary() = binary()</tt></pre>
+
+
+
+<pre><tt>ubf::true() = true
+ubf::false() = false
+ubf::undefined() = undefined</tt></pre>
+
+
+
+<pre><tt>ubf::atom() = atom()</tt></pre>
+
+
+
+<pre><tt>ubf::record() = record()
+------</tt></pre>
+
+
+
+<pre><tt>== Mapping: UBF value -> JSON value
+------
+ubf::tuple() = {struct, [{<<"$T">>, ubf::list()}]}</tt></pre>
+
+
+
+<pre><tt>ubf::list() = [value()]</tt></pre>
+
+
+
+<pre><tt>ubf::number() = integer() | float()</tt></pre>
+
+
+
+<pre><tt>ubf::string() = {struct, [{<<"$S">>, binary()}]}</tt></pre>
+
+
+
+<pre><tt>ubf::proplist() = {struct, [{binary(), value()}]}</tt></pre>
+
+
+
+<pre><tt>ubf::binary() = binary()</tt></pre>
+
+
+
+<pre><tt>ubf::true() = true
+ubf::false() = false
+ubf::undefined() = null</tt></pre>
+
+
+
+<pre><tt>ubf::atom() = {struct, [{<<"$A">>, atomname()}]}
+     atomname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the actual atom</tt></pre>
+
+
+
+<pre><tt>ubf::record() = {struct, [{<<"$R">>, recordname()}] ++ [recordpair()]}
+     recordname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record's name
+     recordpair() = {recordkey(), value()}
+     recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key's name</tt></pre>
+
+
+
+<pre><tt>value() = ubf::tuple() | ubf::list() | ubf::number() | ubf::string() | ubf::binary() | ubf::true() | ubf::false() | ubf::undefined() | ubf::atom() | ubf::record()
+------</tt></pre>
+.
+
+
+
+__Behaviours:__ [`contract_proto`](https://github.com/norton/ubf/blob/master/doc/contract_proto.md).<a name="index"></a>
 
 ##Function Index##
 

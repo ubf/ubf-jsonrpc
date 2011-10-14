@@ -12,10 +12,20 @@
 ##Function Index##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#rpc_v11_req_decode-3">rpc_v11_req_decode/3</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_req_decode-4">rpc_v11_req_decode/4</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_req_decode_print-3">rpc_v11_req_decode_print/3</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_req_encode-3">rpc_v11_req_encode/3</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_req_encode-4">rpc_v11_req_encode/4</a></td><td>Take an Erlang RPC term (atom or tuple, where 1st element of the  
-tuple is the RPC function to call) and extract the AuthInfo (if  
-SubstAuthInfoP is true) and encode the call atom/tuple as an intermediate  
-representation of a JSON object.</td></tr><tr><td valign="top"><a href="#rpc_v11_req_encode_print-3">rpc_v11_req_encode_print/3</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_res_decode-2">rpc_v11_res_decode/2</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_res_decode_print-2">rpc_v11_res_decode_print/2</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_res_encode-4">rpc_v11_res_encode/4</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_res_encode_print-4">rpc_v11_res_encode_print/4</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#rpc_v11_req_decode-3">rpc_v11_req_decode/3</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_req_decode-4">rpc_v11_req_decode/4</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_req_decode_print-3">rpc_v11_req_decode_print/3</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_req_encode-3">rpc_v11_req_encode/3</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_req_encode-4">rpc_v11_req_encode/4</a></td><td><p>Take an Erlang RPC term (atom or tuple, where 1st element of the
+tuple is the RPC function to call) and extract the AuthInfo (if
+SubstAuthInfoP is true) and encode the call atom/tuple as an intermediate
+representation of a JSON object.</p>
+
+
+<pre><tt>The intermediate _JSON object needs to be string-ified before it\'s
+really a JSON thing, because JSON things are strings.</tt></pre>
+
+
+
+<pre><tt>See EUnit test module ubf_jsonrpc_examples_test.erl for example
+usage.</tt></pre>
+.</td></tr><tr><td valign="top"><a href="#rpc_v11_req_encode_print-3">rpc_v11_req_encode_print/3</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_res_decode-2">rpc_v11_res_decode/2</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_res_decode_print-2">rpc_v11_res_decode_print/2</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_res_encode-4">rpc_v11_res_encode/4</a></td><td></td></tr><tr><td valign="top"><a href="#rpc_v11_res_encode_print-4">rpc_v11_res_encode_print/4</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
@@ -71,19 +81,21 @@ representation of a JSON object.</td></tr><tr><td valign="top"><a href="#rpc_v11
 
 
 
+<p>Take an Erlang RPC term (atom or tuple, where 1st element of the
+tuple is the RPC function to call) and extract the AuthInfo (if
+SubstAuthInfoP is true) and encode the call atom/tuple as an intermediate
+representation of a JSON object.</p>
 
 
-Take an Erlang RPC term (atom or tuple, where 1st element of the  
-tuple is the RPC function to call) and extract the AuthInfo (if  
-SubstAuthInfoP is true) and encode the call atom/tuple as an intermediate  
-representation of a JSON object.
+<pre><tt>The intermediate _JSON object needs to be string-ified before it\'s
+really a JSON thing, because JSON things are strings.</tt></pre>
 
 
 
-The intermediate _JSON object needs to be string-ified before it's really a  
-JSON thing, because JSON things are strings.
+<pre><tt>See EUnit test module ubf_jsonrpc_examples_test.erl for example
+usage.</tt></pre>
 
-See EUnit test module ubf_jsonrpc_examples_test.erl for example usage.<a name="rpc_v11_req_encode_print-3"></a>
+<a name="rpc_v11_req_encode_print-3"></a>
 
 ###rpc_v11_req_encode_print/3##
 

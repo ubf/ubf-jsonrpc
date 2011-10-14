@@ -4,7 +4,7 @@
 %% this library: Erlang client &amp; Erlang server application code usually
 %% have no need to use these functions.
 %%
-%% == Links ==
+%% == Links
 %%
 %% <ul>
 %% <li> http://www.erlang-projects.org/Public/news/ejson/view </li>
@@ -16,8 +16,8 @@
 %% <li> http://www.json.com/json-schema-proposal/ </li>
 %% </ul>
 %%
-%% == JSON Basic Data Types ==
-%% ```
+%% == JSON Basic Data Types
+%% ------
 %% object
 %%           {}
 %%           { members }
@@ -39,10 +39,10 @@
 %%          true (atom)
 %%          false (atom)
 %%          null (atom)
-%% '''
+%% ------
 %%
-%% == Mapping: JSON -> Erlang Terms, using mochiweb ==
-%% ```
+%% == Mapping: JSON -> Erlang Terms, using mochiweb
+%% ------
 %% json::object() = {struct, [json::pair()]}
 %%
 %% json::pair() = {string(), json::value()}
@@ -60,10 +60,10 @@
 %% json::true() = true
 %% json::false() = false
 %% json::null() = null
-%% '''
+%% ------
 %%
-%% == Mapping: UBF -> Erlang Terms ==
-%% ```
+%% == Mapping: UBF -> Erlang Terms
+%% ------
 %% ubf::tuple() = tuple()
 %%
 %% ubf::list() = list()
@@ -83,10 +83,10 @@
 %% ubf::atom() = atom()
 %%
 %% ubf::record() = record()
-%% '''
+%% ------
 %%
-%% == Mapping: UBF value -> JSON value ==
-%% ```
+%% == Mapping: UBF value -> JSON value
+%% ------
 %% ubf::tuple() = {struct, [{<<"$T">>, ubf::list()}]}
 %%
 %% ubf::list() = [value()]
@@ -112,7 +112,7 @@
 %%      recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key's name
 %%
 %% value() = ubf::tuple() | ubf::list() | ubf::number() | ubf::string() | ubf::binary() | ubf::true() | ubf::false() | ubf::undefined() | ubf::atom() | ubf::record()
-%% '''
+%% ------
 
 -module(jsf).
 -behaviour(contract_proto).

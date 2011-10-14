@@ -109,10 +109,11 @@ rpc_v11_req_encode(Request, Id, UBFMod) ->
 %% SubstAuthInfoP is true) and encode the call atom/tuple as an intermediate
 %% representation of a JSON object.
 %%
-%% The intermediate _JSON object needs to be string-ified before it's really a
-%% JSON thing, because JSON things are strings.
+%% The intermediate _JSON object needs to be string-ified before it\'s
+%% really a JSON thing, because JSON things are strings.
 %%
-%% See EUnit test module ubf_jsonrpc_examples_test.erl for example usage.
+%% See EUnit test module ubf_jsonrpc_examples_test.erl for example
+%% usage.
 
 rpc_v11_req_encode(Method, Id, _UBFMod, _SubstAuthInfoP) when is_atom(Method) ->
     {undefined, {struct, [{<<"version">>, <<"1.1">>}, {<<"id">>, Id}, {<<"method">>, jsf:atom_to_binary(Method)}, {<<"params">>, []}]}};

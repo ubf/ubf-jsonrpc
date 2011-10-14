@@ -13,7 +13,28 @@
 
 
 <table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#do-4">do/4</a></td><td>Equivalent to <a href="#do-6"><tt>do(Url, Contract, Request, Id, [], [])</tt></a>.</td></tr><tr><td valign="top"><a href="#do-6">do/6</a></td><td>Equivalent to <a href="#do-7"><tt>do(Url, Contract, Request, Id, HTTPOptions, Options,
-true)</tt></a>.</td></tr><tr><td valign="top"><a href="#do-7">do/7</a></td><td>Send an atom/tuple RPC call request to a JSON-RPC service at Url.</td></tr></table>
+true)</tt></a>.</td></tr><tr><td valign="top"><a href="#do-7">do/7</a></td><td><p>Send an atom/tuple RPC call request to a JSON-RPC service at Url.</p>
+
+
+<pre><tt>Per JSON-RPC definition, if we return an +ok+ 4-tuple, either the
+2nd element will be +undefined+ (i.e. call failed, see 3rd element) or the
+3rd element will be +undefined+ (i.e. call succeeded, see 2nd element).</tt></pre>
+
+
+
+<pre><tt>See the Inets app docs for http:request/4 for definition of HTTPOptions
+and Options arguments.</tt></pre>
+
+
+
+<pre><tt>If the SubstAuthInfoP flag is true, then the 2nd element of the
+Request tuple is assumed to be authentication info of some kind.
+It must be agreed upon that the contract is expecting such auth
+info games, because the server side will extract auth info from the
+HTTP session and insert that data into the 2nd element of Request,
+which will effective replace whatever the client had placed in the
+2nd element here on the client side.</tt></pre>
+.</td></tr></table>
 
 
 <a name="functions"></a>
@@ -55,25 +76,25 @@ Equivalent to [`do(Url, Contract, Request, Id, HTTPOptions, Options,true)`](#do-
 
 
 
+<p>Send an atom/tuple RPC call request to a JSON-RPC service at Url.</p>
 
 
-Send an atom/tuple RPC call request to a JSON-RPC service at Url.
-
-
-
-Per JSON-RPC definition, if we return an 'ok' 4-tuple, either the  
-2nd element will be 'undefined' (i.e. call failed, see 3rd element) or the  
-3rd element will be 'undefined' (i.e. call succeeded, see 2nd element).
+<pre><tt>Per JSON-RPC definition, if we return an +ok+ 4-tuple, either the
+2nd element will be +undefined+ (i.e. call failed, see 3rd element) or the
+3rd element will be +undefined+ (i.e. call succeeded, see 2nd element).</tt></pre>
 
 
 
-See the Inets app docs for http:request/4 for definition of HTTPOptions  
-and Options arguments.
+<pre><tt>See the Inets app docs for http:request/4 for definition of HTTPOptions
+and Options arguments.</tt></pre>
 
-If the SubstAuthInfoP flag is true, then the 2nd element of the
+
+
+<pre><tt>If the SubstAuthInfoP flag is true, then the 2nd element of the
 Request tuple is assumed to be authentication info of some kind.
 It must be agreed upon that the contract is expecting such auth
 info games, because the server side will extract auth info from the
 HTTP session and insert that data into the 2nd element of Request,
 which will effective replace whatever the client had placed in the
-2nd element here on the client side.
+2nd element here on the client side.</tt></pre>
+
