@@ -155,7 +155,18 @@ test_008(Url,Contract,AuthInfo) ->
     ?assertMatch({ok,server_timeout_res03,undefined,_Id},Response).
 
 %% server crash
+-ifndef(old_inets_httpc_before_r15b).
+
+test_009(Url,Contract,AuthInfo) ->
+    Request = {server_crash_req05,AuthInfo,infinity},
+    Response = do_rpc(Url,Contract,Request,infinity),
+    ?assertMatch({error,500},Response).
+
+-else. % ifndef(old_inets_httpc).
+
 test_009(Url,Contract,AuthInfo) ->
     Request = {server_crash_req05,AuthInfo,infinity},
     Response = do_rpc(Url,Contract,Request,infinity),
     ?assertMatch({error,socket_closed_remotely},Response).
+
+-endif. % ifndef(old_inets_httpc).
