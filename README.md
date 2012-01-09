@@ -380,12 +380,12 @@ repository under an MIT license.</p>
 
 
 <table width="100%" border="0" summary="list of modules">
-<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/dev/doc/jsf.md" class="module">jsf</a></td></tr>
-<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/dev/doc/jsf_charset.md" class="module">jsf_charset</a></td></tr>
-<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/dev/doc/jsf_driver.md" class="module">jsf_driver</a></td></tr>
-<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/dev/doc/jsf_utils.md" class="module">jsf_utils</a></td></tr>
-<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/dev/doc/ubf_jsonrpc.md" class="module">ubf_jsonrpc</a></td></tr>
-<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/dev/doc/ubf_jsonrpc_inets_httpc_simple.md" class="module">ubf_jsonrpc_inets_httpc_simple</a></td></tr>
-<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/dev/doc/ubf_jsonrpc_inets_httpd_simple.md" class="module">ubf_jsonrpc_inets_httpd_simple</a></td></tr>
-<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/dev/doc/ubf_jsonrpc_inets_httpd_simple_auth.md" class="module">ubf_jsonrpc_inets_httpd_simple_auth</a></td></tr></table>
+<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/master/doc/jsf.md" class="module">jsf</a></td></tr>
+<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/master/doc/jsf_charset.md" class="module">jsf_charset</a></td></tr>
+<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/master/doc/jsf_driver.md" class="module">jsf_driver</a></td></tr>
+<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/master/doc/jsf_utils.md" class="module">jsf_utils</a></td></tr>
+<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/master/doc/ubf_jsonrpc.md" class="module">ubf_jsonrpc</a></td></tr>
+<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/master/doc/ubf_jsonrpc_inets_httpc_simple.md" class="module">ubf_jsonrpc_inets_httpc_simple</a></td></tr>
+<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/master/doc/ubf_jsonrpc_inets_httpd_simple.md" class="module">ubf_jsonrpc_inets_httpd_simple</a></td></tr>
+<tr><td><a href="https://github.com/norton/ubf-jsonrpc/blob/master/doc/ubf_jsonrpc_inets_httpd_simple_auth.md" class="module">ubf_jsonrpc_inets_httpd_simple_auth</a></td></tr></table>
 
