@@ -70,7 +70,7 @@ Equivalent to [`do(Url, Contract, Request, Id, HTTPOptions, Options,true)`](#do-
 
 
 
-<pre>do(Url::string(), Contract::atom(), Request::atom() | tuple(), Id::string(), HTTPOptions::[proplist()](#type-proplist), Options::[proplist()](#type-proplist), SubstAuthInfoP::bool()) -&gt; {ok, term() | undefined, term() | undefined, string()} | {error, term()}</pre>
+<pre>do(Url::string(), Contract::atom(), Request::atom() | tuple(), Id::string(), HTTPOptions::<a href="#type-proplist">proplist()</a>, Options::<a href="#type-proplist">proplist()</a>, SubstAuthInfoP::bool()) -> {ok, term() | undefined, term() | undefined, string()} | {error, term()}</pre>
 <br></br>
 
 

@@ -75,7 +75,7 @@ usage.</tt></pre>
 
 
 
-<pre>rpc_v11_req_encode(Method::atom() | tuple(), Id::binary(), UBFMod::atom(), SubstAuthInfoP::boolean()) -&gt; {undefined | term(), [encoded_json_term()](#type-encoded_json_term)}</pre>
+<pre>rpc_v11_req_encode(Method::atom() | tuple(), Id::binary(), UBFMod::atom(), SubstAuthInfoP::boolean()) -> {undefined | term(), <a href="#type-encoded_json_term">encoded_json_term()</a>}</pre>
 <br></br>
 
 
