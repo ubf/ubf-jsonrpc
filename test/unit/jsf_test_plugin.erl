@@ -1,4 +1,5 @@
 -module(jsf_test_plugin).
+-behaviour(ubf_plugin_stateful).
 
 -include("ubf.hrl").
 
@@ -60,9 +61,9 @@ handlerRpc(funny, List, State, _Env) when is_list(List) ->
 handlerRpc(funny, stop, State, _Env) ->
     {ack, start, State}.
 
-handlerStop(Pid, Reason, State) ->
+handlerStop(Pid, Reason, ManagerState) ->
     io:format("Client stopped:~p ~p~n",[Pid, Reason]),
-    State.
+    ManagerState.
 
 up_case(I) ->
     map(fun to_upper/1 , I).
