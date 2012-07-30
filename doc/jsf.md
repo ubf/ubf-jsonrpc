@@ -185,7 +185,7 @@ ubf::undefined() = null</tt></pre>
 
 
 
-__Behaviours:__ [`contract_proto`](https://github.com/norton/ubf/blob/master/doc/contract_proto.md).<a name="index"></a>
+__Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/contract_proto.md).<a name="index"></a>
 
 ##Function Index##
 

@@ -19,7 +19,7 @@ please follow this recipe:</p>
 
 <pre><tt>$ mkdir working-directory-name
 $ cd working-directory-name
-$ git clone git://github.com/norton/ubf-jsonrpc.git ubf_jsonrpc
+$ git clone git://github.com/ubf/ubf-jsonrpc.git ubf_jsonrpc
 $ cd ubf_jsonrpc
 $ ./rebar get-deps
 $ ./rebar clean
@@ -164,7 +164,7 @@ Create working directory
 
 <pre><tt>$ mkdir working-directory-name
 $ cd working-directory-name
-$ repo init -u git://github.com/norton/manifests.git -m ubf-jsonrpc-default.xml</tt></pre>
+$ repo init -u git://github.com/ubf/manifests.git -m ubf-jsonrpc-default.xml</tt></pre>
 
 
 <table><tr>
@@ -174,7 +174,7 @@ Note
 <td class="content">Your "Git" identity is needed during the init step.  Please
 enter the name and email of your GitHub account if you have one.  Team
 members having read-write access are recommended to use "repo init -u
-<a href="mailto:git@github.com">git@github.com</a>:norton/manifests.git -m ubf-jsonrpc-default-rw.xml".</td>
+<a href="mailto:git@github.com">git@github.com</a>:ubf/manifests.git -m ubf-jsonrpc-default-rw.xml".</td>
 </tr></table>
 
 
