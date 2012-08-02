@@ -2,7 +2,7 @@
 %%%-------------------------------------------------------------------
 
 -module(jsf_utils).
--include("ubf.hrl").
+-include_lib("ubf/include/ubf.hrl").
 
 -export([ubf_contract/1, ubf_contract/2]).
 

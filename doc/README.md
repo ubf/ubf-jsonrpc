@@ -19,7 +19,7 @@ please follow this recipe:</p>
 
 <pre><tt>$ mkdir working-directory-name
 $ cd working-directory-name
-$ git clone git://github.com/ubf/ubf-jsonrpc.git ubf_jsonrpc
+$ git clone https://github.com/ubf/ubf-jsonrpc.git ubf_jsonrpc
 $ cd ubf_jsonrpc
 $ ./rebar get-deps
 $ ./rebar clean
@@ -164,7 +164,7 @@ Create working directory
 
 <pre><tt>$ mkdir working-directory-name
 $ cd working-directory-name
-$ repo init -u git://github.com/ubf/manifests.git -m ubf-jsonrpc-default.xml</tt></pre>
+$ repo init -u https://github.com/ubf/manifests.git -m ubf-jsonrpc-default.xml</tt></pre>
 
 
 <table><tr>

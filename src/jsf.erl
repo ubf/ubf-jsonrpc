@@ -117,7 +117,7 @@
 -module(jsf).
 -behaviour(contract_proto).
 
--include("ubf.hrl").
+-include_lib("ubf/include/ubf.hrl").
 
 -export([proto_vsn/0, proto_driver/0, proto_packet_type/0]).
 -export([encode/1, encode/2, do_encode/2]).

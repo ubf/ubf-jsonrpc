@@ -1,7 +1,7 @@
 -module(jsf_test_plugin).
 -behaviour(ubf_plugin_stateful).
 
--include("ubf.hrl").
+-include_lib("ubf/include/ubf.hrl").
 
 -export([info/0, description/0,
          managerStart/1, managerRpc/2,

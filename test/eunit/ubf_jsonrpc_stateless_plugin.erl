@@ -1,7 +1,7 @@
 -module(ubf_jsonrpc_stateless_plugin).
 -behaviour(ubf_plugin_stateless).
 
--include("ubf.hrl").
+-include_lib("ubf/include/ubf.hrl").
 
 -export([info/0, description/0, keepalive/0]).
 -export([handlerStart/1, handlerStop/3, handlerRpc/1]).

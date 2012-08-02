@@ -1,6 +1,6 @@
 -module(ubf_jsonrpc).
 
--include("ubf.hrl").
+-include_lib("ubf/include/ubf.hrl").
 
 -export([rpc_v11_req_encode_print/3]).
 -export([rpc_v11_req_encode/3, rpc_v11_req_encode/4]).
