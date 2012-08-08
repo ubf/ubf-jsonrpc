@@ -59,14 +59,14 @@ typeref({prim,Min,Max,Tag},Mod) ->
 typeref({tuple,Elements},Mod) ->
     io_lib:format("{\"$T\" : [ ~s ]}", [join([typeref(Element,Mod) || Element <- Elements], ", ")]);
 %% record
-typeref({record,RecName,Elements},Mod) when is_atom(RecName) ->
-    Values = tl(tl(Elements)),
-    RecordKey = {RecName,length(Elements)-2},
+typeref({record,RecName,Elements0},Mod) when is_atom(RecName) ->
+    Elements = tl(tuple_to_list(Elements0)),
+    RecordKey = {RecName,length(Elements)},
     Fields = Mod:contract_record(RecordKey),
     io_lib:format("{\"$R\" : \"~p\", ~s}",
                   [RecName, join([ io_lib:format("\"~p\" : ~s", [Field, typeref(Element,Mod)])
-                                   || {Field,Element} <- lists:zip(Fields,Values) ], ", ")]);
-typeref({record_ext,RecName,_,_Elements},_Mod) when is_atom(RecName) ->
+                                   || {Field,Element} <- lists:zip(Fields,Elements) ], ", ")]);
+typeref({record_ext,RecName,_,_Elements0},_Mod) when is_atom(RecName) ->
     erlang:exit(fatal);
 %% list
 typeref({list,0,infinity,Element},Mod) ->
