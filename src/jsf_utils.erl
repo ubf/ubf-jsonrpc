@@ -112,6 +112,8 @@ typeref({string,Value},_Mod) ->
 %% predef
 typeref({predef,atom},_Mod) ->
     "atom()";
+typeref({predef,boolean},_Mod) ->
+    "boolean()";
 typeref({predef,binary},_Mod) ->
     "binary()";
 typeref({predef,float},_Mod) ->
