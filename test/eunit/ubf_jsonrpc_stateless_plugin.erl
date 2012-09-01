@@ -4,6 +4,7 @@
 -include_lib("ubf/include/ubf.hrl").
 
 -export([info/0, description/0, keepalive/0]).
+-export([moduleStart/1, moduleRestart/1]).
 -export([handlerStart/1, handlerStop/3, handlerRpc/1]).
 
 -export([now/2]).
@@ -23,6 +24,13 @@ description() ->
 keepalive() ->
     ok.
 
+%% @doc start module
+moduleStart(_Args) ->
+    unused.
+
+%% @doc restart module
+moduleRestart(Args) ->
+    moduleStart(Args).
 
 %% @spec handlerStart(Args::list(any())) ->
 %%          {accept, Reply::any(), StateName::atom(), StateData::term()} | {reject, Reason::any()}

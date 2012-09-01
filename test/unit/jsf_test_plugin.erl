@@ -4,7 +4,7 @@
 -include_lib("ubf/include/ubf.hrl").
 
 -export([info/0, description/0,
-         managerStart/1, managerRpc/2,
+         managerStart/1, managerRestart/2, managerRpc/2,
          handlerStart/2, handlerRpc/4, handlerStop/3
         ]).
 
@@ -24,6 +24,8 @@ description() -> "The test server is a ...
         bla".
 
 managerStart(_) -> {ok, myManagerState}.
+
+managerRestart(_,_) -> ok. %% noop
 
 managerRpc(secret, State) ->
     {accept, welcomeToFTP, State};
