@@ -130,8 +130,8 @@ typeref({predef,term},_Mod) ->
     "term()";
 typeref({predef,tuple},_Mod) ->
     "tuple()";
-typeref({predef,void},_Mod) ->
-    erlang:exit(fatal);
+typeref({predef,none},_Mod) ->
+    "none()";
 %% predef with attributes
 typeref({predef,{atom,Attrs}},_Mod) ->
     io_lib:format("atom(~s)", [join([ atom_to_list(Attr) || Attr <- Attrs ], ",")]);
@@ -207,8 +207,8 @@ ubf_contract(Mod) ->
           , "tuple()\n\t\t{\"$T\" : array }"
           , "tuple()?\n\t\t{\"$T\" : array } | null"
           , ""
-          , "void()\n\t\t /* no result is returned */"
-          , "void()?\n\t\t /* no result is returned */ | null"
+          , "none()\n\t\t /* no result is returned */"
+          , "none()?\n\t\t /* no result is returned */ | null"
           , ""
           , "// --------------------"
           , "// type attributes"
