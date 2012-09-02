@@ -2,14 +2,13 @@
 
 +NAME("test").
 
-+VSN("ubf1.0").
++VSN("ubf2.0").
 
 
 %%%%%%
 +TYPES
 
 authinfo()              :: term();
-timeout()               :: infinity | integer(); %% milliseconds
 now()                   :: {integer(), integer(), integer()};
 
 now_req()               :: {now, authinfo(), timeout()};
@@ -37,10 +36,10 @@ ubf_keepalive_res()     :: ok;
 %%%%%
 %%% meta methods
 ubf_info_req()          :: info;
-ubf_info_res()          :: string();
+ubf_info_res()          :: ubfstring();
 
 ubf_description_req()   :: description;
-ubf_description_res()   :: string();
+ubf_description_res()   :: ubfstring();
 
 ubf_contract_req()      :: contract;
 ubf_contract_res()      :: term().
