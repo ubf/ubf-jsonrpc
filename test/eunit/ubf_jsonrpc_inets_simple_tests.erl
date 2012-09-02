@@ -78,7 +78,7 @@ all_actual_tests_inets_simple() ->
 %% setup
 test_setup() ->
     true = code:add_patha("../test/eunit"),
-    application:start(inets),
+    _ = application:start(inets),
     ServerRoot = filename:join([filename:dirname(code:priv_dir(inets)), "examples", "server_root"]),
     DocumentRoot = filename:join(ServerRoot, "htdocs"),
     Options = [{port, 0}, {bind_address, any}, {server_name,"httpd_test"}

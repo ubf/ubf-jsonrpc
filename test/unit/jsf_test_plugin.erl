@@ -28,9 +28,9 @@ managerStart(_) -> {ok, myManagerState}.
 managerRestart(_,_) -> ok. %% noop
 
 managerRpc(secret, State) ->
-    {accept, welcomeToFTP, State};
+    {{ok, welcomeToFTP}, State};
 managerRpc(_, State) ->
-    {reject, badPassword, State}.
+    {{error, badPassword}, State}.
 
 %% handlerStart(Args, ManagerPid) ->
 %%   {accept, State, InitialData}
