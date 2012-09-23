@@ -4,7 +4,7 @@
 -module(jsf_driver).
 -behaviour(contract_driver).
 
--export([start/1, start/2, init/1, init/2, encode/3, decode/5]).
+-export([start/1, start/2, init/1, init/2, encode/3, decode/4]).
 
 start(Contract) ->
     start(Contract, []).
@@ -22,16 +22,11 @@ init(_Contract, Options) ->
 encode(Contract, _Safe, Term) ->
     [jsf:encode(Term, Contract), "\n"].
 
-decode(Contract, Safe, Cont, Binary, CallBack) ->
-    Cont1 = jsf:decode(Binary, Contract, Cont),
-    decode(Contract, Safe, Cont1, CallBack).
-
-decode(Contract, Safe, {ok, Term, Binary}=_Cont, CallBack) ->
-    CallBack(Term),
-    Cont1 = jsf:decode_init(Safe, Binary),
-    decode(Contract, Safe, Cont1, CallBack);
-decode(_Contract, _Safe, Cont, _CallBack) ->
-    Cont.
+decode(Contract, Safe, {init, Rest, undefined}, Binary) ->
+    Cont = jsf:decode_init(Safe, Rest),
+    jsf:decode(Binary, Contract, Cont);
+decode(Contract, _Safe, Cont, Binary) ->
+    jsf:decode(Binary, Contract, Cont).
 
 safe(Options) ->
     proplists:get_bool(safe, Options).

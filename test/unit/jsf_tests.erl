@@ -64,7 +64,7 @@ test_jsf_decode_1() ->
     Tst = test_jsf_decode_1,
     lists:foldl(
         fun({Desc, In, _, Exp}, Acc) ->
-            {ok, Out, <<>>} = jsf:decode(In, jsf_test_plugin),
+            {done, Out, <<>>, undefined} = jsf:decode(In, jsf_test_plugin),
             ?PRINTRESULT,
             Out = Exp,
             Acc + 1

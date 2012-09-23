@@ -260,7 +260,7 @@ decode(X, Mod, #state{safe=Safe, binary=Old}=State) when is_binary(X) ->
                         {'EXIT', _} ->
                             {error, syntax_error};
                         JSON ->
-                            {ok, do_decode(JSON, Mod, Safe), <<>>}
+                            {done, do_decode(JSON, Mod, Safe), <<>>, undefined}
                     end
             end
     end.
