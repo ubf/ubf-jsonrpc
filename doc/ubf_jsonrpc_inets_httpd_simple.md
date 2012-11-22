@@ -5,8 +5,6 @@
 * [Function Details](#functions)
 
 
-
-
 <a name="index"></a>
 
 ##Function Index##
@@ -16,9 +14,9 @@
 function.</p>
 
 
-<pre><tt>Erlang parameterized modes don\'t support variable # of args for
+<pre><code>Erlang parameterized modes don\'t support variable # of args for
 its auto-generated new() function.  So we fake it here, calling the
-new func for the real parameterized module.</tt></pre>
+new func for the real parameterized module.</code></pre>
 .</td></tr><tr><td valign="top"><a href="#new-3">new/3</a></td><td></td></tr></table>
 
 
@@ -31,25 +29,19 @@ new func for the real parameterized module.</tt></pre>
 ###new/2##
 
 
-
-
 `new(Contract, Url) -> any()`
-
-
 
 <p>Fake being an Erlang parameterized module, by exporting a new()
 function.</p>
 
 
-<pre><tt>Erlang parameterized modes don\'t support variable # of args for
+<pre><code>Erlang parameterized modes don\'t support variable # of args for
 its auto-generated new() function.  So we fake it here, calling the
-new func for the real parameterized module.</tt></pre>
+new func for the real parameterized module.</code></pre>
 
 <a name="new-3"></a>
 
 ###new/3##
-
-
 
 
 `new(Contract, Url, Subst_AuthInfo) -> any()`

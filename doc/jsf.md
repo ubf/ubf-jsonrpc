@@ -10,17 +10,17 @@
  105,111,110,46]</p>
 
 
-<pre><tt>For most purposes, these functions are not called by code outside of
+<pre><code>For most purposes, these functions are not called by code outside of
 this library: Erlang client &amp; Erlang server application code usually
-have no need to use these functions.</tt></pre>
+have no need to use these functions.</code></pre>
 
 
 
-<pre><tt>== Links</tt></pre>
+<pre><code>== Links</code></pre>
 
 
 
-<pre><tt><ul>
+<pre><code><ul>
 <li> http://www.erlang-projects.org/Public/news/ejson/view </li>
 <li> http://www.erlang.org/eeps/eep-0018.html </li>
 <li> http://www.erlang.org/ml-archive/erlang-questions/200511/msg00193.html </li>
@@ -28,11 +28,11 @@ have no need to use these functions.</tt></pre>
 <li> http://www.json.org/ </li>
 <li> http://www.lshift.net/blog/2007/02/17/json-and-json-rpc-for-erlang </li>
 <li> http://www.json.com/json-schema-proposal/ </li>
-</ul></tt></pre>
+</ul></code></pre>
 
 
 
-<pre><tt>== JSON Basic Data Types
+<pre><code>== JSON Basic Data Types
 ------
 object
           {}
@@ -55,137 +55,135 @@ value
          true (atom)
          false (atom)
          null (atom)
-------</tt></pre>
+------</code></pre>
 
 
 
-<pre><tt>== Mapping: JSON -> Erlang Terms, using mochiweb
+<pre><code>== Mapping: JSON -> Erlang Terms, using mochiweb
 ------
-json::object() = {struct, [json::pair()]}</tt></pre>
+json::object() = {struct, [json::pair()]}</code></pre>
 
 
 
-<pre><tt>json::pair() = {string(), json::value()}
+<pre><code>json::pair() = {string(), json::value()}
      string() = [byte()]
-     byte() = integer()</tt></pre>
+     byte() = integer()</code></pre>
 
 
 
-<pre><tt>json::array() = [json::value()]</tt></pre>
+<pre><code>json::array() = [json::value()]</code></pre>
 
 
 
-<pre><tt>json::value() = json::object() | json::array() | json::number() | json::string() | json::true() | json::false() | json::null()</tt></pre>
+<pre><code>json::value() = json::object() | json::array() | json::number() | json::string() | json::true() | json::false() | json::null()</code></pre>
 
 
 
-<pre><tt>json::number() = integer() | float()</tt></pre>
+<pre><code>json::number() = integer() | float()</code></pre>
 
 
 
-<pre><tt>json::string() = binary()</tt></pre>
+<pre><code>json::string() = binary()</code></pre>
 
 
 
-<pre><tt>json::true() = true
+<pre><code>json::true() = true
 json::false() = false
 json::null() = null
-------</tt></pre>
+------</code></pre>
 
 
 
-<pre><tt>== Mapping: UBF -> Erlang Terms
+<pre><code>== Mapping: UBF -> Erlang Terms
 ------
-ubf::tuple() = tuple()</tt></pre>
+ubf::tuple() = tuple()</code></pre>
 
 
 
-<pre><tt>ubf::list() = list()</tt></pre>
+<pre><code>ubf::list() = list()</code></pre>
 
 
 
-<pre><tt>ubf::number = integer() | float()</tt></pre>
+<pre><code>ubf::number = integer() | float()</code></pre>
 
 
 
-<pre><tt>ubf::string() = {'$S', [integer()]}</tt></pre>
+<pre><code>ubf::string() = {'$S', [integer()]}</code></pre>
 
 
 
-<pre><tt>ubf::proplist() = {'$P', [{term(), term()}]}</tt></pre>
+<pre><code>ubf::proplist() = {'$P', [{term(), term()}]}</code></pre>
 
 
 
-<pre><tt>ubf::binary() = binary()</tt></pre>
+<pre><code>ubf::binary() = binary()</code></pre>
 
 
 
-<pre><tt>ubf::true() = true
+<pre><code>ubf::true() = true
 ubf::false() = false
-ubf::undefined() = undefined</tt></pre>
+ubf::undefined() = undefined</code></pre>
 
 
 
-<pre><tt>ubf::atom() = atom()</tt></pre>
+<pre><code>ubf::atom() = atom()</code></pre>
 
 
 
-<pre><tt>ubf::record() = record()
-------</tt></pre>
+<pre><code>ubf::record() = record()
+------</code></pre>
 
 
 
-<pre><tt>== Mapping: UBF value -> JSON value
+<pre><code>== Mapping: UBF value -> JSON value
 ------
-ubf::tuple() = {struct, [{<<"$T">>, ubf::list()}]}</tt></pre>
+ubf::tuple() = {struct, [{<<"$T">>, ubf::list()}]}</code></pre>
 
 
 
-<pre><tt>ubf::list() = [value()]</tt></pre>
+<pre><code>ubf::list() = [value()]</code></pre>
 
 
 
-<pre><tt>ubf::number() = integer() | float()</tt></pre>
+<pre><code>ubf::number() = integer() | float()</code></pre>
 
 
 
-<pre><tt>ubf::string() = {struct, [{<<"$S">>, binary()}]}</tt></pre>
+<pre><code>ubf::string() = {struct, [{<<"$S">>, binary()}]}</code></pre>
 
 
 
-<pre><tt>ubf::proplist() = {struct, [{binary(), value()}]}</tt></pre>
+<pre><code>ubf::proplist() = {struct, [{binary(), value()}]}</code></pre>
 
 
 
-<pre><tt>ubf::binary() = binary()</tt></pre>
+<pre><code>ubf::binary() = binary()</code></pre>
 
 
 
-<pre><tt>ubf::true() = true
+<pre><code>ubf::true() = true
 ubf::false() = false
-ubf::undefined() = null</tt></pre>
+ubf::undefined() = null</code></pre>
 
 
 
-<pre><tt>ubf::atom() = {struct, [{<<"$A">>, atomname()}]}
-     atomname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the actual atom</tt></pre>
+<pre><code>ubf::atom() = {struct, [{<<"$A">>, atomname()}]}
+     atomname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the actual atom</code></pre>
 
 
 
-<pre><tt>ubf::record() = {struct, [{<<"$R">>, recordname()}] ++ [recordpair()]}
+<pre><code>ubf::record() = {struct, [{<<"$R">>, recordname()}] ++ [recordpair()]}
      recordname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record's name
      recordpair() = {recordkey(), value()}
-     recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key's name</tt></pre>
+     recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key's name</code></pre>
 
 
 
-<pre><tt>value() = ubf::tuple() | ubf::list() | ubf::number() | ubf::string() | ubf::binary() | ubf::true() | ubf::false() | ubf::undefined() | ubf::atom() | ubf::record()
-------</tt></pre>
+<pre><code>value() = ubf::tuple() | ubf::list() | ubf::number() | ubf::string() | ubf::binary() | ubf::true() | ubf::false() | ubf::undefined() | ubf::atom() | ubf::record()
+------</code></pre>
 .
 
-
-
-__Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/contract_proto.md).<a name="index"></a>
+__Behaviours:__ [`contract_proto`](contract_proto.md).<a name="index"></a>
 
 ##Function Index##
 
@@ -202,15 +200,11 @@ __Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/co
 ###atom_to_binary/1##
 
 
-
-
 `atom_to_binary(X) -> any()`
 
 <a name="binary_to_atom-1"></a>
 
 ###binary_to_atom/1##
-
-
 
 
 `binary_to_atom(X) -> any()`
@@ -220,15 +214,11 @@ __Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/co
 ###binary_to_existing_atom/1##
 
 
-
-
 `binary_to_existing_atom(X) -> any()`
 
 <a name="contract_records-0"></a>
 
 ###contract_records/0##
-
-
 
 
 `contract_records() -> any()`
@@ -238,15 +228,11 @@ __Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/co
 ###decode/1##
 
 
-
-
 `decode(X) -> any()`
 
 <a name="decode-2"></a>
 
 ###decode/2##
-
-
 
 
 `decode(X, Mod) -> any()`
@@ -256,15 +242,11 @@ __Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/co
 ###decode/3##
 
 
-
-
 `decode(X, Mod, State) -> any()`
 
 <a name="decode_init-0"></a>
 
 ###decode_init/0##
-
-
 
 
 `decode_init() -> any()`
@@ -274,15 +256,11 @@ __Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/co
 ###decode_init/1##
 
 
-
-
 `decode_init(Safe) -> any()`
 
 <a name="decode_init-2"></a>
 
 ###decode_init/2##
-
-
 
 
 `decode_init(Safe, Binary) -> any()`
@@ -292,15 +270,11 @@ __Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/co
 ###do_decode/2##
 
 
-
-
 `do_decode(X, Mod) -> any()`
 
 <a name="do_decode-3"></a>
 
 ###do_decode/3##
-
-
 
 
 `do_decode(X, Mod, Safe) -> any()`
@@ -310,15 +284,11 @@ __Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/co
 ###do_encode/2##
 
 
-
-
 `do_encode(X, Mod) -> any()`
 
 <a name="encode-1"></a>
 
 ###encode/1##
-
-
 
 
 `encode(X) -> any()`
@@ -328,15 +298,11 @@ __Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/co
 ###encode/2##
 
 
-
-
 `encode(X, Mod) -> any()`
 
 <a name="proto_driver-0"></a>
 
 ###proto_driver/0##
-
-
 
 
 `proto_driver() -> any()`
@@ -346,15 +312,11 @@ __Behaviours:__ [`contract_proto`](https://github.com/ubf/ubf/blob/master/doc/co
 ###proto_packet_type/0##
 
 
-
-
 `proto_packet_type() -> any()`
 
 <a name="proto_vsn-0"></a>
 
 ###proto_vsn/0##
-
-
 
 
 `proto_vsn() -> any()`

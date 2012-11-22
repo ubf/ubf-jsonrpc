@@ -5,8 +5,6 @@
 * [Function Details](#functions)
 
 
-
-
 <a name="index"></a>
 
 ##Function Index##
@@ -22,8 +20,6 @@
 <a name="do-1"></a>
 
 ###do/1##
-
-
 
 
 `do(Mod) -> any()`

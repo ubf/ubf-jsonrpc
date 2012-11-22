@@ -17,14 +17,11 @@ in carrier-grade systems.</em></p>
 please follow this recipe:</p>
 
 
-<pre><tt>$ mkdir working-directory-name
+<pre><code>$ mkdir working-directory-name
 $ cd working-directory-name
 $ git clone https://github.com/ubf/ubf-jsonrpc.git ubf_jsonrpc
 $ cd ubf_jsonrpc
-$ ./rebar get-deps
-$ ./rebar clean
-$ ./rebar compile
-$ ./rebar eunit</tt></pre>
+$ make deps clean compile test</code></pre>
 
 <p>For an alternative recipe with other "features" albeit more complex,
 please read further.</p>
@@ -86,30 +83,30 @@ between an Erlang record and an arbitrary Erlang tuple.  An experience
 Erlang developer would view such a distinction either with skepticism
 or with approval.</p>
 <p>For the skeptics, the contract author has the option of having the
-UBF(b) contract compiler automatically generate Erlang <tt>-record()</tt>
+UBF(b) contract compiler automatically generate Erlang <code>-record()</code>
 definitions for appropriate tuples within the contract.  Such record
 definitions are very convenient for developers on the Erlang side of
 the world, but they introduce more complication to the JavaScript side
 of the world.  For example, JavaScript does not have a concept of an
 arbitrary atom, as Erlang does.  Also, the JavaScript side must make a
-distinction between <tt>{foo, 42}</tt> and <tt>{bar, 42}</tt> when <tt>#foo</tt> is a
-record on the Erlang side but <tt>#bar</tt> is not.</p>
+distinction between <code>{foo, 42}</code> and <code>{bar, 42}</code> when <code>#foo</code> is a
+record on the Erlang side but <code>#bar</code> is not.</p>
 <p>This extra convention creates something slightly messy-looking, if you
 look at the raw JSON passed back-and-forth.  The examples of the
-Erlang record <tt>{foo, 42}</tt> and the general tuple <tt>{bar, 42}</tt> would look
+Erlang record <code>{foo, 42}</code> and the general tuple <code>{bar, 42}</code> would look
 like this:</p>
 
 
-<pre><tt>record (defined in the contract as "foo() = #foo{attribute1 = term()};")
+<pre><code>record (defined in the contract as "foo() = #foo{attribute1 = term()};")
 
    {"$R":"foo", "attribute1":42}
 
 general tuple
 
-   {"$T":[{"$A":"bar"}, 42]}</tt></pre>
+   {"$T":[{"$A":"bar"}, 42]}</code></pre>
 
 <p>However, it requires very little JavaScript code to convert objects
-with the <tt>"!$R"</tt>, <tt>"$T"</tt>, and <tt>"$A"</tt> notation (for records, tuples,
+with the <code>"!$R"</code>, <code>"$T"</code>, and <code>"$A"</code> notation (for records, tuples,
 and atoms) into whatever object is most convenient.</p>
 
 <table><tr>
@@ -141,8 +138,8 @@ Configure your e-mail and name for Git
 </p>
 
 
-<pre><tt>$ git config \--global user.email "you@example.com"
-$ git config \--global user.name "Your Name"</tt></pre>
+<pre><code>$ git config \--global user.email "you@example.com"
+$ git config \--global user.name "Your Name"</code></pre>
 
 </li>
 <li>
@@ -151,9 +148,9 @@ Install Repo
 </p>
 
 
-<pre><tt>$ mkdir -p ~/bin
+<pre><code>$ mkdir -p ~/bin
 $ wget -O - https://dl-ssl.google.com/dl/googlesource/git-repo/repo > ~/bin/repo
-$ chmod a+x ~/bin/repo</tt></pre>
+$ chmod a+x ~/bin/repo</code></pre>
 
 </li>
 <li>
@@ -162,9 +159,9 @@ Create working directory
 </p>
 
 
-<pre><tt>$ mkdir working-directory-name
+<pre><code>$ mkdir working-directory-name
 $ cd working-directory-name
-$ repo init -u https://github.com/ubf/manifests.git -m ubf-jsonrpc-default.xml</tt></pre>
+$ repo init -u https://github.com/ubf/manifests.git -m ubf-jsonrpc-default.xml</code></pre>
 
 
 <table><tr>
@@ -193,12 +190,12 @@ Download Git repositories
 </p>
 
 
-<pre><tt>$ cd working-directory-name
-$ repo sync</tt></pre>
+<pre><code>$ cd working-directory-name
+$ repo sync</code></pre>
 
 </li>
 </ol>
-<p>For futher information and help for related tools, please refer to the
+<p>For further information and help for related tools, please refer to the
 following links:</p>
 <ul>
 <li>
@@ -208,7 +205,7 @@ Erlang - <a href="http://www.erlang.org/">http://www.erlang.org/</a>
 <ul>
 <li>
 <p>
-<strong>R13B04 or newer, R15B has been tested most recently</strong>
+<strong>R13B04 or newer, R15B02 has been tested most recently</strong>
 </p>
 </li>
 </ul>
@@ -220,7 +217,7 @@ Git - <a href="http://git-scm.com/">http://git-scm.com/</a>
 <ul>
 <li>
 <p>
-<strong>Git 1.5.4 or newer, Git 1.7.9.3 has been tested recently</strong>
+<strong>Git 1.5.4 or newer, Git 1.8.0 has been tested most recently</strong>
 </p>
 </li>
 <li>
@@ -242,7 +239,7 @@ Python - <a href="http://www.python.org">http://www.python.org</a>
 <ul>
 <li>
 <p>
-<strong>Python 2.4 or newer, Python 2.7.1 has been tested most recently
+<strong>Python 2.4 or newer, Python 2.7.2 has been tested most recently
     (CAUTION: Python 3.x might be too new)</strong>
 </p>
 </li>
@@ -255,12 +252,12 @@ Python - <a href="http://www.python.org">http://www.python.org</a>
 </li>
 <li>
 <p>
-Rebar - <a href="https://github.com/basho/rebar/wiki">https://github.com/basho/rebar/wiki</a>
+Rebar - <a href="https://github.com/rebar/rebar/wiki">https://github.com/rebar/rebar/wiki</a>
 </p>
 </li>
 <li>
 <p>
-Repo - <a href="http://source.android.com/source/git-repo.md">http://source.android.com/source/git-repo.html</a>
+Repo - <a href="http://source.android.com/source/git-repo.html">http://source.android.com/source/git-repo.html</a>
 </p>
 </li>
 </ul>
@@ -281,8 +278,8 @@ Build
 </p>
 
 
-<pre><tt>$ cd working-directory-name
-$ make compile</tt></pre>
+<pre><code>$ cd working-directory-name
+$ make compile</code></pre>
 
 </li>
 <li>
@@ -291,8 +288,8 @@ Run the unit tests
 </p>
 
 
-<pre><tt>$ cd working-directory-name
-$ make eunit</tt></pre>
+<pre><code>$ cd working-directory-name
+$ make eunit</code></pre>
 
 </li>
 </ol>
@@ -313,8 +310,8 @@ Build Dialyzer's PLT <em>(required once)</em>
 </p>
 
 
-<pre><tt>$ cd working-directory-name
-$ make build-plt</tt></pre>
+<pre><code>$ cd working-directory-name
+$ make build-plt</code></pre>
 
 
 <table><tr>
@@ -332,8 +329,8 @@ Dialyze with specs
 </p>
 
 
-<pre><tt>$ cd working-directory-name
-$ make dialyze</tt></pre>
+<pre><code>$ cd working-directory-name
+$ make dialyze</code></pre>
 
 
 <table><tr>
@@ -353,8 +350,8 @@ Dialyze without specs
 </p>
 
 
-<pre><tt>$ cd working-directory-name
-$ make dialyze-nospec</tt></pre>
+<pre><code>$ cd working-directory-name
+$ make dialyze-nospec</code></pre>
 
 </li>
 </ol>
@@ -366,10 +363,10 @@ $ make dialyze-nospec</tt></pre>
 <h2 id="_credits">Credits</h2>
 
 <p>Many, many thanks to Joe Armstrong, UBF's designer and original
-implementor.</p>
+implementer.</p>
 <p>Thanks to MochiWeb.  UBF-JSONRPC relies on the MochiWeb
 (i.e. mochijson2.erl) application for encoding and decoding JSON in
-erlang.</p>
+Erlang.</p>
 <p>Gemini Mobile Technologies, Inc. has approved the release of this
 repository under an MIT license.</p>
 
