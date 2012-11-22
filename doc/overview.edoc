@@ -21,10 +21,7 @@ $ mkdir working-directory-name
 $ cd working-directory-name
 $ git clone https://github.com/ubf/ubf-jsonrpc.git ubf_jsonrpc
 $ cd ubf_jsonrpc
-$ ./rebar get-deps
-$ ./rebar clean
-$ ./rebar compile
-$ ./rebar eunit
+$ make deps clean compile test
 ------
 
 For an alternative recipe with other "features" albeit more complex,
@@ -158,20 +155,20 @@ $ cd working-directory-name
 $ repo sync
 ------
 
-For futher information and help for related tools, please refer to the
+For further information and help for related tools, please refer to the
 following links:
 
 - Erlang - http://www.erlang.org/
-  * *R13B04 or newer, R15B has been tested most recently*
+  * *R13B04 or newer, R15B02 has been tested most recently*
 - Git - http://git-scm.com/
-  * *Git 1.5.4 or newer, Git 1.7.9.3 has been tested recently*
+  * *Git 1.5.4 or newer, Git 1.8.0 has been tested most recently*
   * _required for Repo and GitHub_
 - GitHub - https://github.com
 - Python - http://www.python.org
-  * *Python 2.4 or newer, Python 2.7.1 has been tested most recently
+  * *Python 2.4 or newer, Python 2.7.2 has been tested most recently
     (CAUTION: Python 3.x might be too new)*
 * _required for Repo_
-  - Rebar - https://github.com/basho/rebar/wiki
+  - Rebar - https://github.com/rebar/rebar/wiki
   - Repo - http://source.android.com/source/git-repo.html
 
 == To build - basic recipe
@@ -227,11 +224,12 @@ $ make dialyze-nospec
 == Credits
 
 Many, many thanks to Joe Armstrong, UBF\'s designer and original
-implementor.
+implementer.
 
 Thanks to MochiWeb.  UBF-JSONRPC relies on the MochiWeb
 (i.e. mochijson2.erl) application for encoding and decoding JSON in
-erlang.
+Erlang.
 
 Gemini Mobile Technologies, Inc. has approved the release of this
 repository under an MIT license.
+@end
