@@ -6,14 +6,14 @@
   {vsn, git},
   {registered, []},
   {applications, [kernel, stdlib, sasl]},
-  {modules, [jsf.erl
-             , jsf_charset.erl
-             , jsf_driver.erl
-             , jsf_utils.erl
-             , ubf_jsonrpc.erl
-             , ubf_jsonrpc_inets_httpc_simple.erl
-             , ubf_jsonrpc_inets_httpd_simple.erl
-             , ubf_jsonrpc_inets_httpd_simple_auth.erl
+  {modules, [jsf
+             , jsf_charset
+             , jsf_driver
+             , jsf_utils
+             , ubf_jsonrpc
+             , ubf_jsonrpc_inets_httpc_simple
+             , ubf_jsonrpc_inets_httpd_simple
+             , ubf_jsonrpc_inets_httpd_simple_auth
             ]},
   {env, []}
  ]}.

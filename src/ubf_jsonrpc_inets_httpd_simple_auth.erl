@@ -1,3 +1,6 @@
+
+-include_lib("pmod_transform/include/pmod.hrl").
+
 -module(ubf_jsonrpc_inets_httpd_simple_auth, [CONTRACT, URL, SUBST_AUTHINFO]).
 
 -ifdef(old_inets).
