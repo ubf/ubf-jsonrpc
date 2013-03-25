@@ -1,3 +1,4 @@
+%% encoding: UTF-8
 {application,ubf_jsonrpc}.
 {packages,[]}.
 {modules,[jsf,jsf_charset,jsf_driver,jsf_utils,ubf_jsonrpc,
