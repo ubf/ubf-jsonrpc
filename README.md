@@ -1,11 +1,11 @@
 
 
-#Universal Binary Format and JSON-RPC#
-
+# Universal Binary Format and JSON-RPC #
 
 Copyright (c) 2011-2013 by Joseph Wayne Norton
 
-__Authors:__ Joseph Wayne Norton ([`norton@alum.mit.edu`](mailto:norton@alum.mit.edu)).<p>This is UBF-JSONRPC, a framework for integrating UBF, JSF and
+__Authors:__ Joseph Wayne Norton ([`norton@alum.mit.edu`](mailto:norton@alum.mit.edu)).
+<p>This is UBF-JSONRPC, a framework for integrating UBF, JSF and
 JSON-RPC.  This repository depends on the UBF and MOCHIWEB (actually
 only the mochijson2.erl module) open source repositories.</p>
 <p><em>This repository is intended for production deployment and is deployed
@@ -373,7 +373,7 @@ repository under an MIT license.</p>
 
 
 
-##Modules##
+## Modules ##
 
 
 <table width="100%" border="0" summary="list of modules">

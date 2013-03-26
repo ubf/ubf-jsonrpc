@@ -1,13 +1,13 @@
 
 
-#Module ubf_jsonrpc_inets_httpc_simple#
+# Module ubf_jsonrpc_inets_httpc_simple #
 * [Function Index](#index)
 * [Function Details](#functions)
 
 
 <a name="index"></a>
 
-##Function Index##
+## Function Index ##
 
 
 <table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#do-4">do/4</a></td><td>Equivalent to <a href="#do-6"><tt>do(Url, Contract, Request, Id, [], [])</tt></a>.</td></tr><tr><td valign="top"><a href="#do-6">do/6</a></td><td>Equivalent to <a href="#do-7"><tt>do(Url, Contract, Request, Id, HTTPOptions, Options,
@@ -37,28 +37,31 @@ which will effective replace whatever the client had placed in the
 
 <a name="functions"></a>
 
-##Function Details##
+## Function Details ##
 
 <a name="do-4"></a>
 
-###do/4##
-
+### do/4 ###
 
 `do(Url, Contract, Request, Id) -> any()`
 
-Equivalent to [`do(Url, Contract, Request, Id, [], [])`](#do-6).<a name="do-6"></a>
+Equivalent to [`do(Url, Contract, Request, Id, [], [])`](#do-6).
+<a name="do-6"></a>
 
-###do/6##
-
+### do/6 ###
 
 `do(Url, Contract, Request, Id, HTTPOptions, Options) -> any()`
 
-Equivalent to [`do(Url, Contract, Request, Id, HTTPOptions, Options,true)`](#do-7).<a name="do-7"></a>
+Equivalent to [`do(Url, Contract, Request, Id, HTTPOptions, Options,true)`](#do-7).
+<a name="do-7"></a>
 
-###do/7##
+### do/7 ###
 
 
-<pre>do(Url::string(), Contract::atom(), Request::atom() | tuple(), Id::string(), HTTPOptions::<a href="#type-proplist">proplist()</a>, Options::<a href="#type-proplist">proplist()</a>, SubstAuthInfoP::bool()) -> {ok, term() | undefined, term() | undefined, string()} | {error, term()}</pre>
+<pre><code>
+do(Url::string(), Contract::atom(), Request::atom() | tuple(), Id::string(), HTTPOptions::<a href="#type-proplist">proplist()</a>, Options::<a href="#type-proplist">proplist()</a>, SubstAuthInfoP::bool()) -&gt; {ok, term() | undefined, term() | undefined, string()} | {error, term()}
+</code></pre>
+
 <br></br>
 
 
@@ -83,4 +86,5 @@ info games, because the server side will extract auth info from the
 HTTP session and insert that data into the 2nd element of Request,
 which will effective replace whatever the client had placed in the
 2nd element here on the client side.</code></pre>
+
 
