@@ -6,12 +6,11 @@
 * [Function Details](#functions)
 
 
-<p>Functions for JSON<[8594,69,114,108,97,110,103,32,100,97,116,97,32,99,111,110,118,101,114,115,
- 105,111,110,46]</p>
+<p>Functions for JSON to Erlang data conversion.</p>
 
 
 <pre><code>For most purposes, these functions are not called by code outside of
-this library: Erlang client &amp; Erlang server application code usually
+this library: Erlang client and Erlang server application code usually
 have no need to use these functions.</code></pre>
 
 
@@ -108,11 +107,11 @@ ubf::tuple() = tuple()</code></pre>
 
 
 
-<pre><code>ubf::string() = {'$S', [integer()]}</code></pre>
+<pre><code>ubf::string() = {\'$S\', [integer()]}</code></pre>
 
 
 
-<pre><code>ubf::proplist() = {'$P', [{term(), term()}]}</code></pre>
+<pre><code>ubf::proplist() = {\'$P\', [{term(), term()}]}</code></pre>
 
 
 
@@ -173,9 +172,9 @@ ubf::undefined() = null</code></pre>
 
 
 <pre><code>ubf::record() = {struct, [{<<"$R">>, recordname()}] ++ [recordpair()]}
-     recordname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record's name
+     recordname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record\'s name
      recordpair() = {recordkey(), value()}
-     recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key's name</code></pre>
+     recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key\'s name</code></pre>
 
 
 

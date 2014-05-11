@@ -1,7 +1,7 @@
-%% @doc Functions for JSON&lt;->Erlang data conversion.
+%% @doc Functions for JSON to Erlang data conversion.
 %%
 %% For most purposes, these functions are not called by code outside of
-%% this library: Erlang client &amp; Erlang server application code usually
+%% this library: Erlang client and Erlang server application code usually
 %% have no need to use these functions.
 %%
 %% == Links
@@ -70,9 +70,9 @@
 %%
 %% ubf::number = integer() | float()
 %%
-%% ubf::string() = {'$S', [integer()]}
+%% ubf::string() = {\'$S\', [integer()]}
 %%
-%% ubf::proplist() = {'$P', [{term(), term()}]}
+%% ubf::proplist() = {\'$P\', [{term(), term()}]}
 %%
 %% ubf::binary() = binary()
 %%
@@ -107,9 +107,9 @@
 %%      atomname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the actual atom
 %%
 %% ubf::record() = {struct, [{<<"$R">>, recordname()}] ++ [recordpair()]}
-%%      recordname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record's name
+%%      recordname() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record\'s name
 %%      recordpair() = {recordkey(), value()}
-%%      recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key's name
+%%      recordkey() = binary()  % a.k.a. list_to_binary(atom_to_list()) for the record key\'s name
 %%
 %% value() = ubf::tuple() | ubf::list() | ubf::number() | ubf::string() | ubf::binary() | ubf::true() | ubf::false() | ubf::undefined() | ubf::atom() | ubf::record()
 %% ------

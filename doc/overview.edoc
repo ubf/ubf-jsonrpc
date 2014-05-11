@@ -24,9 +24,6 @@ $ cd ubf_jsonrpc
 $ make deps clean compile test
 ------
 
-For an alternative recipe with other "features" albeit more complex,
-please read further.
-
 == Documentation
 
 === Where should I start?
