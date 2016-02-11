@@ -2,7 +2,7 @@
 
 # Universal Binary Format and JSON-RPC #
 
-Copyright (c) 2011-2014 by Joseph Wayne Norton
+Copyright (c) 2011-2016 by Joseph Wayne Norton
 
 __Authors:__ Joseph Wayne Norton ([`norton@alum.mit.edu`](mailto:norton@alum.mit.edu)).
 <p>This is UBF-JSONRPC, a framework for integrating UBF, JSF and
