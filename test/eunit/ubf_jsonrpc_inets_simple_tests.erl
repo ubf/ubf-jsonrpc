@@ -40,7 +40,7 @@ do_rpc(Url, Contract, Q, Timeout) ->
     ubf_jsonrpc_inets_httpc_simple:do(Url, Contract, Q, Id, HTTPOptions, Options).
 
 make_id() ->
-    {MSec, Sec, USec} = now(),
+    {MSec, Sec, USec} = os:timestamp(),
     list_to_binary(integer_to_list((MSec * 1000000 * 1000000) + (Sec * 1000000) + USec)).
 
 %%%----------------------------------------------------------------------

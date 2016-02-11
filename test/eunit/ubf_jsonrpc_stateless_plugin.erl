@@ -71,7 +71,7 @@ handlerRpc(Event) ->
 %%%----------------------------------------------------------------------
 
 now(_AuthInfo, _Timeout) ->
-    {ok, erlang:now()}.
+    {ok, os:timestamp()}.
 
 client_breaks_req01(_AuthInfo, _Timeout) ->
     exit(client_breaks_req01_should_not_be_called).
